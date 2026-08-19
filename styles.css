@@ -1,7 +1,7 @@
-@font-face{font-family:Manrope;src:url('/fonts/ManropeV5-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:Manrope;src:url('/fonts/ManropeV5-ExtraBold.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap}
-@font-face{font-family:SourceHanSans;src:url('/fonts/SourceHanSansCN-VF.otf.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
-@font-face{font-family:SourceHanSerif;src:url('/fonts/SourceHanSerifCN-VF.otf.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:Manrope;src:url('./public/fonts/ManropeV5-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:Manrope;src:url('./public/fonts/ManropeV5-ExtraBold.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:SourceHanSans;src:url('./public/fonts/SourceHanSansCN-VF.otf.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:SourceHanSerif;src:url('./public/fonts/SourceHanSerifCN-VF.otf.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
 
 @property --flow-expansion{syntax:"<length>";inherits:true;initial-value:0px}
 :root{--yellow:#eeac35;--red:#b93a26;--blue:#06436f;--deep-blue:#0a3c79;--dark:#202020;--cream:#fffdf1;--muted:#939497;--tools-pin-distance:1900px;--preparation-expansion:0px;--pattern-flow-expansion:0px;--weaving-flow-expansion:0px;--flow-tail-gap:120px;--flow-expansion:calc(var(--preparation-expansion) + var(--pattern-flow-expansion) + var(--weaving-flow-expansion) + var(--flow-tail-gap))}
@@ -71,7 +71,7 @@ a{text-decoration:none}
 .hero-loom{position:absolute;z-index:4;left:755px;top:21px;width:705px;height:599px;object-fit:contain;object-position:bottom;transform:scale(1.19);transform-origin:right bottom}
 .hero-discover{position:absolute;z-index:6;left:1061px;top:542px;width:170px;height:139px;color:white;font-size:14px;line-height:24px}
 .hero-discover span{position:absolute;left:0;top:32px;width:157px;white-space:nowrap}
-.hero-discover::after{content:"";position:absolute;left:82.516px;top:-.5px;width:87.984px;height:140.401px;background:url('/figma-assets/hero-discover.svg') center/100% 100% no-repeat;pointer-events:none}
+.hero-discover::after{content:"";position:absolute;left:82.516px;top:-.5px;width:87.984px;height:140.401px;background:url('./public/figma-assets/hero-discover.svg') center/100% 100% no-repeat;pointer-events:none}
 .hero-discover i,.hero-discover b{display:none}
 
 /* Timeline */
@@ -105,7 +105,7 @@ a{text-decoration:none}
 .era-labels{height:32px;display:flex;align-items:center;justify-content:center;gap:96px;font-size:16px;line-height:32px}
 .era-labels span,.era-labels b{text-align:left;font-weight:400;white-space:nowrap}.era-labels span{opacity:.6}.era-labels b{font-weight:700}
 .track-line{position:relative;margin-top:9px;height:40px}
-.track-line::before{content:"";position:absolute;left:3.356px;top:18.56px;width:1065px;height:2.001px;background:url('/figma-assets/icons/timeline-dash.svg') center/100% 100% no-repeat}
+.track-line::before{content:"";position:absolute;left:3.356px;top:18.56px;width:1065px;height:2.001px;background:url('./public/figma-assets/icons/timeline-dash.svg') center/100% 100% no-repeat}
 .track-line>i{position:absolute;border-radius:50%;background:var(--red)}
 .track-line>i:nth-child(1){left:0;width:6px;height:6px}.track-line>i:nth-child(2){left:13px;width:8px;height:8px}.track-line>i:nth-of-type(3){left:99px;width:8px;height:8px}.track-line>i:nth-of-type(4){left:114px;width:6px;height:6px}
 .track-line>i:nth-child(1),.track-line>i:nth-of-type(4){top:17px}.track-line>i:nth-child(2),.track-line>i:nth-of-type(3){top:16px}
@@ -150,7 +150,7 @@ a{text-decoration:none}
 .tool{position:relative;width:171px;height:380px;flex:none;text-align:center;padding-top:28px;transform:translateY(52px)}
 .tool img{display:block;width:100%;height:258.667px;object-fit:contain;margin:0 auto}
 .tool strong{--label-focus:0;position:absolute;z-index:1;isolation:isolate;display:block;width:max-content;left:50%;top:330px;transform:translateX(-50%);margin:0;color:#a9665c;font-family:SourceHanSerif,serif;font-size:32px;line-height:44px;letter-spacing:5.12px;white-space:nowrap;will-change:color}
-.tool strong::before{content:"";position:absolute;z-index:-1;left:-24px;top:-6px;width:calc(100% + 48px);height:56px;background:url('/figma-assets/tool-label-brush.svg') center/100% 100% no-repeat;clip-path:inset(0 0 0 var(--brush-hidden,100%));opacity:var(--label-focus);will-change:opacity,clip-path}
+.tool strong::before{content:"";position:absolute;z-index:-1;left:-24px;top:-6px;width:calc(100% + 48px);height:56px;background:url('./public/figma-assets/tool-label-brush.svg') center/100% 100% no-repeat;clip-path:inset(0 0 0 var(--brush-hidden,100%));opacity:var(--label-focus);will-change:opacity,clip-path}
 .tool.wide strong::before{left:50%;width:320px;transform:translateX(-50%)}
 .tool:nth-child(2){width:187.667px;padding-top:81px}.tool:nth-child(2) img{height:152.667px}.tool:nth-child(3){width:209.333px;padding-top:64px}.tool:nth-child(3) img{height:186.667px}.tool:nth-child(4){width:279px;padding-top:0}.tool:nth-child(4) img{height:314px}.tool:nth-child(5){width:228px;padding-top:73px}.tool:nth-child(5) img{width:228px;height:167.667px}.tool:nth-child(6){width:259.333px;padding-top:71px}.tool:nth-child(6) img{height:171.667px}.tool:nth-child(7){width:198.333px;padding-top:70px}.tool:nth-child(7) img{height:174.667px}.tool:nth-child(8){width:324.667px;padding-top:79px}.tool:nth-child(8) img{height:155.667px}
 .tool.wide strong{font-size:32px;letter-spacing:5.12px}
