@@ -334,10 +334,6 @@
     document.documentElement.style.setProperty('--preparation-expansion', `${preparationExpansion.toFixed(2)}px`);
     document.documentElement.style.setProperty('--pattern-flow-expansion', `${patternExpansion.toFixed(2)}px`);
     document.documentElement.style.setProperty('--weaving-flow-expansion', `${weavingExpansion.toFixed(2)}px`);
-    document.documentElement.style.setProperty(
-      '--flow-tail-gap',
-      `${(120 * (1 - flowStages.weaving.progress)).toFixed(2)}px`
-    );
 
     if (preparationFlow) {
       const preparationVisible = flowStages.preparation.active || flowStages.preparation.closing;
