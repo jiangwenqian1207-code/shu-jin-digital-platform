@@ -1,0 +1,26 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1737" height="1270" viewBox="0 0 1737 1270" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 9652">
+<g id="Frame 9699">
+<rect id="Rectangle 77" x="198" y="298" width="1440" height="686" fill="#202020"/>
+<path id="Rectangle 87" d="M318 984H1518L1496.33 1020.12C1494.88 1022.53 1492.28 1024 1489.47 1024H346.53C343.719 1024 341.115 1022.53 339.67 1020.12L318 984Z" fill="#202020"/>
+</g>
+<g id="Ellipse 6" filter="url(#filter0_f_0_7)">
+<circle cx="1187.5" cy="720.5" r="149.5" fill="#FFDC9E"/>
+</g>
+<g id="Ellipse 7" filter="url(#filter1_f_0_7)">
+<circle cx="462.5" cy="462.5" r="102.5" fill="#B93A26"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_0_7" x="638" y="171" width="1099" height="1099" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="200" result="effect1_foregroundBlur_0_7"/>
+</filter>
+<filter id="filter1_f_0_7" x="0" y="0" width="925" height="925" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="180" result="effect1_foregroundBlur_0_7"/>
+</filter>
+</defs>
+</svg>

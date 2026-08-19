@@ -1,0 +1,22 @@
+<svg preserveAspectRatio="none" overflow="visible" width="26.9961" height="27" viewBox="0 0 26.9961 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="26.9961" height="27" fill="black"/>
+  <path d="M2.24805 2.5H3.74805V13H2.24805V2.5Z" fill="white"/>
+  <path d="M11.248 14.5H12.748V25H11.248V14.5Z" fill="white"/>
+  <path d="M5.24805 2.5H6.74805V11.5H5.24805V2.5Z" fill="#EEAC35"/>
+  <path d="M8.24805 2.5H9.74805V11.5H8.24805V2.5Z" fill="#B93A26"/>
+  <path d="M8.24805 16H9.74805V25H8.24805V16Z" fill="#EEAC35"/>
+  <path d="M5.24805 16H6.74805V25H5.24805V16Z" fill="#B93A26"/>
+  <path d="M2.24805 16H3.74805V25H2.24805V16Z" fill="#06436F"/>
+  <path d="M11.248 2.5H12.748V11.5H11.248V2.5Z" fill="#06436F"/>
+  <path d="M14.248 4H15.748V10H14.248V4Z" fill="white"/>
+  <path d="M14.248 13H15.748V25H14.248V13Z" fill="white"/>
+  <path d="M18.748 11.5H20.248V25H18.748V11.5Z" fill="white"/>
+  <path d="M23.248 13H24.748V25H23.248V13Z" fill="white"/>
+  <path d="M23.248 4H24.748V10H23.248V4Z" fill="white"/>
+  <path d="M2.24805 13L12.748 13V14.5H2.24805V13Z" fill="white"/>
+  <path d="M14.248 2.5H24.748V4H14.248V2.5Z" fill="white"/>
+  <path d="M15.748 6.25H23.248V7.75H15.748V6.25Z" fill="white"/>
+  <path d="M14.248 10H24.748V11.5H14.248V10Z" fill="white"/>
+  <path d="M14.248 13H24.748V14.5H14.248V13Z" fill="white"/>
+  <path d="M18.748 1H20.248V2.5H18.748V1Z" fill="white"/>
+</svg>
