@@ -268,6 +268,15 @@ a{text-decoration:none}
 .weaver-figure{left:0;top:286px;width:298px}.weaver-figure .later-image{position:relative;left:-12px;width:322px;height:256px}.weaver-figure .later-image img{width:399px;height:335px;left:-44px;top:-47px}.weaver-figure figcaption{margin-top:8px}
 .node-weaver{left:322px;top:573px}.node-weaver i{width:105px}
 
+/* Keep the desktop weaving-stage composition aligned with the Figma layout.
+   Mobile retains the compact, sequential coordinates defined below. */
+@media (min-width:768px){
+  .weaving-flow{top:calc(698px + var(--preparation-expansion) + var(--pattern-flow-expansion))}
+  .drawboy-figure{top:-248px}
+  .weaver-figure{top:28px}
+  .node-weaver{top:302px}
+}
+
 .preparation-flow,.pattern-weaving-flow,.weaving-flow{opacity:0;visibility:hidden;pointer-events:none}
 .preparation-stage,.pattern-stage-label,.weaving-stage-label{background:var(--deep-blue);color:#fff;transition:background-color .45s ease,color .45s ease}
 .preparation-stage:is(:hover,:focus-visible,.active),.pattern-stage-label:is(:hover,:focus-visible,.active),.weaving-stage-label:is(:hover,:focus-visible,.active){background:var(--yellow);color:#202020}
