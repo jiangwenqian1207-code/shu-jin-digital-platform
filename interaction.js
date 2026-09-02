@@ -26,6 +26,7 @@
   const patternWeavingFlow = document.querySelector('.pattern-weaving-flow');
   const weavingFlow = document.querySelector('.weaving-flow');
   const patterns = document.querySelector('.patterns');
+  const footerDiscovery = document.querySelector('.footer-discovery');
   const patternRails = [...document.querySelectorAll('.pattern-rail[data-marquee-direction]')];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -64,6 +65,55 @@
   const eraTrack = document.querySelector('.era-track');
   const eraLabels = eraTrack ? [...eraTrack.querySelectorAll('.era-labels > *')] : [];
   const eraControl = eraTrack?.querySelector('.track-line button');
+  const timelinePicture = document.querySelector('.timeline-picture img');
+  const timelineTitle = document.querySelector('.timeline-copy h3');
+  const timelineDescription = document.querySelector('.timeline-copy p');
+  const timelineCaption = document.querySelector('.timeline-copy small');
+  const timelineArrows = [...document.querySelectorAll('.timeline-arrow')];
+  const timelineEntries = [
+    {
+      title: '春秋战国时期',
+      description: '这一时期蜀锦以多彩经线起花的经锦为主，纹样由小型几何纹逐渐发展为大型复合纹样。其构图多以菱形、方形等几何骨架组织画面，并融入舞人、龙凤、麒麟及动植物元素。色彩以黄、红、绿等暖色为主，整体呈现出秩序严谨、层次清晰且富有节奏的装饰特征。',
+      caption: '图例：战国龙凤舞人纹锦',
+      image: './public/shujin-patterns/warring-states-dragon-phoenix-dancer-pattern.jpg',
+      alt: '战国龙凤舞人纹锦'
+    },
+    {
+      title: '秦汉时期',
+      description: '秦汉时期蜀锦纹样逐渐摆脱规整、均匀的几何构图，整体趋向流动、生动与富有变化。题材以云气纹、几何纹、植物纹和动物纹为主，并融入文字、茱萸、虎豹等吉祥元素。构图强调动势与节奏感，色彩多厚重沉稳，常用朱红、绛色、茶褐、深棕、玄色等，呈现出雄浑灵动的时代风格。',
+      caption: '图例：汉五星出东方利中国锦纹',
+      image: './public/digital-pattern-library/han-jin-five-stars-brocade-pattern.jpg',
+      alt: '汉五星出东方利中国锦纹'
+    },
+    {
+      title: '魏晋南北朝时期',
+      description: '魏晋南北朝时期蜀锦纹样在继承汉代传统的基础上，受到丝绸之路与西域文化影响，题材更加多样，出现骆驼、狮象、生命树等动植物纹样。构图逐渐由汉代流动式布局转向更规整的对波、方格、联珠团窠等形式，动物多呈静态对称排列，整体风格趋于秩序化、装饰化，色彩也更加丰富。',
+      caption: '图例：北朝方格兽锦纹',
+      image: './public/digital-pattern-library/northern-dynasties-grid-beast-brocade-pattern.jpg',
+      alt: '北朝方格兽锦纹'
+    },
+    {
+      title: '隋唐时期',
+      description: '隋唐时期蜀锦纹样发展至繁盛阶段，题材丰富、构图饱满，既吸收西域文化，又形成鲜明的本土特色。纹样常见团窠、联珠、宝相花、折枝花鸟及禽兽题材，布局多对称规整又富于变化；植物纹样明显增多，花鸟形象更生动，色彩鲜艳华丽、对比强烈，整体呈现出开放、富丽而兼具异域风情的艺术特征。',
+      caption: '图例：唐代联珠对鹊锦纹',
+      image: './public/digital-pattern-library/tang-dynasty-pearl-roundel-paired-magpie-brocade-pattern.jpg',
+      alt: '唐代联珠对鹊锦纹'
+    },
+    {
+      title: '宋元时期',
+      description: '宋元时期蜀锦纹样在继承隋唐写实花鸟与禽兽题材的基础上，构图趋于清秀典雅、规整均衡。常见花鸟、动植物、几何及吉祥纹样，并发展出落花流水锦、灯笼锦等代表性形式。宋代色彩较隋唐更典雅丰富，元代则受波斯文化影响，常加入金线，整体呈现出雅致中兼具华丽的艺术特征。',
+      caption: '图例：宋代灯笼锦纹',
+      image: './public/digital-pattern-library/song-dynasty-lantern-brocade-pattern.jpg',
+      alt: '宋代灯笼锦纹'
+    },
+    {
+      title: '明清时期',
+      description: '明清时期蜀锦虽受战乱影响一度衰落，但清初逐渐恢复生产，纹样体系也继续发展。明代多在唐宋传统基础上创新，题材以花卉、蝴蝶、几何及吉祥纹样为主；清代则形成方方锦、雨丝锦、月华锦等代表样式，构图更规整繁密，色彩层次丰富，整体呈现出精致华丽、装饰性强的艺术特征。',
+      caption: '图例：明代太子绵羊锦纹',
+      image: './public/digital-pattern-library/ming-dynasty-prince-mianyang-brocade-pattern.jpg',
+      alt: '明代太子绵羊锦纹'
+    }
+  ];
   const mobileTimeline = window.matchMedia('(max-width: 767px)');
   if (eraTrack && eraLabels.length && eraControl) {
     const eraSlotWidth = 96;
@@ -73,6 +123,7 @@
     let eraStartX = 0;
     let eraStartProgress = 0;
     let eraMoved = false;
+    let renderedEraIndex = 0;
 
     const clampEra = (value, min, max) => Math.min(max, Math.max(min, value));
     const getDesktopEraCenters = () => {
@@ -82,10 +133,27 @@
         return bounds.left - lineBounds.left + bounds.width / 2;
       });
     };
+    const renderEraContent = (activeIndex) => {
+      const entry = timelineEntries[activeIndex];
+      if (!entry || activeIndex === renderedEraIndex) return;
+      renderedEraIndex = activeIndex;
+      if (timelinePicture) {
+        timelinePicture.src = entry.image;
+        timelinePicture.alt = entry.alt;
+      }
+      if (timelineTitle) timelineTitle.textContent = entry.title;
+      if (timelineDescription) timelineDescription.textContent = entry.description;
+      if (timelineCaption) timelineCaption.textContent = entry.caption;
+    };
     const setActiveEra = (activeIndex) => {
       eraLabels.forEach((label, index) => label.classList.toggle('active', index === activeIndex));
       eraControl.setAttribute('aria-valuenow', String(activeIndex));
       eraControl.setAttribute('aria-valuetext', eraLabels[activeIndex].textContent.trim());
+      timelineArrows.forEach((arrow) => {
+        const atLimit = arrow.classList.contains('left') ? activeIndex === 0 : activeIndex === eraLabels.length - 1;
+        arrow.setAttribute('aria-disabled', String(atLimit));
+      });
+      renderEraContent(activeIndex);
     };
     const updateEraTimeline = (progress = eraProgress) => {
       eraProgress = clampEra(progress, 0, 1);
@@ -172,6 +240,12 @@
       else if (event.key === 'End') setEraIndex(eraLabels.length - 1);
       else return;
       event.preventDefault();
+    });
+    timelineArrows.forEach((arrow) => {
+      arrow.addEventListener('click', () => {
+        const activeIndex = Math.round(eraProgress * (eraLabels.length - 1));
+        setEraIndex(activeIndex + (arrow.classList.contains('left') ? -1 : 1));
+      });
     });
     window.addEventListener('resize', () => updateEraTimeline());
     mobileTimeline.addEventListener?.('change', () => updateEraTimeline());
@@ -545,11 +619,38 @@
     patterns.style.setProperty('--pattern-rail-spread', `${spread.toFixed(2)}px`);
   };
 
+  const updateFooterBackgroundWidth = () => {
+    if (!footerDiscovery) return;
+
+    const viewportWidth = document.documentElement.clientWidth;
+    const collapsedWidth = viewportWidth * 0.84;
+    const expandedWidth = viewportWidth;
+
+    if (reducedMotion.matches || expandedWidth <= collapsedWidth) {
+      footerDiscovery.parentElement.style.setProperty('--footer-bg-width', `${expandedWidth}px`);
+      return;
+    }
+
+    const footerTop = footerDiscovery.getBoundingClientRect().top;
+    const startLine = window.innerHeight * 0.92;
+    const endLine = window.innerHeight * 0.3;
+    const rawProgress = clamp(
+      (startLine - footerTop) / (startLine - endLine),
+      0,
+      1
+    );
+    const progress = rawProgress * rawProgress * (3 - 2 * rawProgress);
+    const width = collapsedWidth + (expandedWidth - collapsedWidth) * progress;
+
+    footerDiscovery.parentElement.style.setProperty('--footer-bg-width', `${width.toFixed(2)}px`);
+  };
+
   const updateInteractions = () => {
     frame = 0;
     updateBackgroundWidth();
     updateToolsScroll();
     updatePatternRails();
+    updateFooterBackgroundWidth();
     updateFlowStages();
   };
 

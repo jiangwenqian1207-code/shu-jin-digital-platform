@@ -24,7 +24,7 @@
             </a>
             <nav class="primary-nav" aria-label="主导航">
               <a class="active" href="#">首页</a>
-              <a aria-disabled="true">数字纹样库</a>
+              <a href="./digital-pattern-library.html">数字纹样库</a>
               <a aria-disabled="true">数字艺术作品</a>
               <a aria-disabled="true">AI生成纹样</a>
               <a aria-disabled="true">文创产品</a>
@@ -45,7 +45,7 @@
             </div>
             <nav class="mobile-menu-nav" aria-label="手机端主导航">
               <a class="active" href="#">首页</a>
-              <button type="button" disabled>数字纹样库</button>
+              <a href="./digital-pattern-library.html">数字纹样库</a>
               <button type="button" disabled>数字艺术作品</button>
               <button type="button" disabled>AI生成纹样</button>
               <button type="button" disabled>文创产品</button>
@@ -94,7 +94,7 @@
           </div>
           <button class="timeline-arrow left" type="button" aria-label="上一时期"><img src="./public/figma-assets/icons/timeline-left-frame.svg" alt="" /></button>
           <div class="timeline-feature">
-            <div class="timeline-picture"><span></span><img src="./public/shujin-patterns/warring-states-dragon-phoenix-dancer-pattern.png" alt="战国龙凤舞人纹锦" /></div>
+            <div class="timeline-picture"><span></span><img src="./public/shujin-patterns/warring-states-dragon-phoenix-dancer-pattern.jpg" alt="战国龙凤舞人纹锦" /></div>
             <div class="timeline-copy">
               <h3>春秋战国时期</h3>
               <p>这一时期蜀锦以多彩经线起花的经锦为主，纹样由小型几何纹逐渐发展为大型复合纹样。其构图多以菱形、方形等几何骨架组织画面，并融入舞人、龙凤、麒麟及动植物元素。色彩以黄、红、绿等暖色为主，整体呈现出秩序严谨、层次清晰且富有节奏的装饰特征。</p>
@@ -349,7 +349,7 @@
             </div>
             <div class="rail-side title-side blue-side">构<br />图<br />形<br />式</div>
           </div>
-            <a class="pattern-button" href="#"><span>进入数字纹样库</span><b><img src="./public/figma-assets/icons/pattern-enter.svg" alt="" /></b></a>
+            <a class="pattern-button" href="./digital-pattern-library.html"><span>进入数字纹样库</span><b><img src="./public/figma-assets/icons/pattern-enter.svg" alt="" /></b></a>
           </div>
         </section>
 
@@ -368,13 +368,33 @@
 
         <footer id="footer" class="site-footer">
           <div class="design-canvas footer-canvas">
-          <div class="footer-heading"><h2>更多精彩内容等你探索</h2><p>从历史、工艺、纹样与色彩出发，重新理解蜀锦，并探索它在数字时代中的新表达。</p></div>
-          <div class="footer-cards">
-            <a href="#"><img src="./public/pattern-themes/4.png" alt="" /><span>数字纹样库</span></a>
-            <a href="#"><img src="./public/digital-artworks/digital-art-images/digital-art-01.png" alt="" /><span>数字艺术作品</span></a>
-            <a href="#"><img src="./public/ai-pattern-generation/Panda &amp; Scroll Motif.png" alt="" /><span>AI生成纹样</span></a>
-            <a href="#"><img src="./public/cultural-products/cultural-product-assets/bag-01.png" alt="" /><span>文创产品</span></a>
-          </div>
+            <section class="footer-discovery" aria-labelledby="footer-discovery-title">
+              <div class="footer-discovery-inner">
+                <div class="footer-heading"><h2 id="footer-discovery-title">更多精彩内容<br />等你探索</h2><span class="footer-heading-arrow" aria-hidden="true">→</span></div>
+                <div class="footer-cards">
+                  <a class="footer-card footer-card-pattern" href="./digital-pattern-library.html">
+                    <span class="footer-card-panel" aria-hidden="true"></span>
+                    <span class="footer-card-art"><img src="./public/digital-pattern-library/ming-dynasty-prince-mianyang-brocade-pattern.jpg" alt="" /></span>
+                    <span class="footer-card-copy"><strong>数字纹样库</strong><small>你可以在这里找到并下载<br />你需要的蜀锦纹样素材</small><em>了解更多 <b aria-hidden="true">→</b></em></span>
+                  </a>
+                  <a class="footer-card footer-card-artwork" href="./digital-pattern-library.html">
+                    <span class="footer-card-panel" aria-hidden="true"></span>
+                    <span class="footer-card-art"><img src="./public/digital-artworks/digital-art-images/digital-art-01.png" alt="" /></span>
+                    <span class="footer-card-copy"><strong>数字艺术作品</strong><small>你可以在这里探索蜀锦文化<br />与数字艺术融合的创新表达</small><em>了解更多 <b aria-hidden="true">→</b></em></span>
+                  </a>
+                  <a class="footer-card footer-card-ai" href="#">
+                    <span class="footer-card-panel" aria-hidden="true"></span>
+                    <span class="footer-card-art"><img src="./public/ai-pattern-generation/ai-wisteria-pendant-pattern.png" alt="" /></span>
+                    <span class="footer-card-copy"><strong>AI生成纹样</strong><small>你可以在这里通过 AI<br />创作出属于你的个性化<br />蜀锦纹样</small><em>了解更多 <b aria-hidden="true">→</b></em></span>
+                  </a>
+                  <a class="footer-card footer-card-product" href="#">
+                    <span class="footer-card-panel" aria-hidden="true"></span>
+                    <span class="footer-card-art"><img src="./public/cultural-products/cultural-product-assets/bag-02.png" alt="" /></span>
+                    <span class="footer-card-copy"><strong>文创产品</strong><small>你可以在这里发现蜀锦文创<br />或定制专属于你的文化好物</small><em>了解更多 <b aria-hidden="true">→</b></em></span>
+                  </a>
+                </div>
+              </div>
+            </section>
             <div class="footer-bottom"><p>邮箱：contact@ShuBrocadeCulturePlatform.cn</p><p>锦官织境蜀锦数字文化平台　|　©2026 SHUBROCADE　　川ICP备XXXXXXXX号-7　 川公网安备 XXXXXXXXXXXXXX号</p></div>
           </div>
         </footer>

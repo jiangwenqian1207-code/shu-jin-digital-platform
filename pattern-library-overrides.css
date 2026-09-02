@@ -1,0 +1,109 @@
+/* Final interaction and icon refinements. */
+.pattern-card:hover .pattern-favorite img,
+.pattern-card:focus-within .pattern-favorite img {
+  content: url('./public/icons/icon-favorite-active.svg');
+}
+
+.library-pagination button:last-child::after { display: none; }
+
+.library-pagination button:last-child img {
+  display: block;
+  width: 13px;
+  height: 16px;
+}
+
+.language-caret {
+  width: 11px;
+  height: 6px;
+  margin-left: 4px;
+  transform: none;
+}
+
+/* The submit control remains inset by 8px on the top, bottom and right. */
+.library-search {
+  padding: 8px;
+}
+
+.library-search label {
+  min-width: 0;
+  flex: 1;
+}
+
+.library-search input {
+  width: 100%;
+  min-width: 0;
+}
+
+.library-search-submit {
+  flex: none;
+  margin-left: 8px;
+}
+
+/* Homepage navigation structure, shared by the library page. */
+.library-header .design-canvas { position: relative; width: 100%; max-width: 1440px; height: 100%; margin: 0 auto; }
+.library-header .header-inner { position: relative; left: 50%; width: 1151.25px; height: 48px; margin: 0; padding-top: 16px; display: flex; align-items: flex-start; transform: translateX(-50%); }
+.library-header .brand { width: 103.42px; height: 24.31px; margin-top: 4px; display: flex; flex: none; gap: 4px; align-items: center; overflow: hidden; }
+.library-header .brand-mark-image { display: block; width: 24.297px; height: 24.305px; flex: none; }
+.library-header .brand-words { display: flex; width: 75.12px; height: 23.56px; flex-direction: column; gap: 4px; align-items: center; justify-content: center; }
+.library-header .brand-words img:first-child { display: block; width: 75.114px; height: 16.242px; }
+.library-header .brand-words img:last-child { display: block; width: 75.115px; height: 3.318px; }
+.library-header .primary-nav { display: flex; width: 575px; height: 23px; margin: 0 0 0 40px; flex: none; gap: 56px; align-items: center; white-space: nowrap; }
+.library-header .primary-nav a { position: relative; top: 2px; color: #fff; font-size: 16px; line-height: 23px; text-decoration: none; }
+.library-header .primary-nav .active { color: var(--yellow); font-weight: 700; }
+.library-header .primary-nav .active::after { position: absolute; right: 0; bottom: -22px; left: 0; height: 4px; background: var(--yellow); content: ""; }
+.library-header .header-actions { display: flex; height: 32px; margin-left: auto; gap: 24px; align-items: center; color: #fff; }
+.library-header .icon-button { width: 20.25px; height: 20.25px; padding: 0; border: 0; background: transparent; }
+.library-header .icon-button img { display: block; width: 100%; height: 100%; }
+.library-header .language { display: flex; gap: 8px; align-items: center; padding: 0; border: 0; background: transparent; color: #fff; font-size: 16px; white-space: nowrap; }
+.library-header .language-caret { width: 11px; height: 6px; margin: 0; }
+.library-header .account { display: flex; width: 112px; height: 32px; gap: 8px; align-items: center; justify-content: center; padding: 0 16px; border: 1px solid #fff; border-radius: 37px; background: transparent; color: #fff; font-size: 16px; }
+.library-header .account span { display: block; width: 32px; line-height: 23px; white-space: nowrap; }
+.library-header .account b { display: block; width: 1px; height: 16px; flex: 0 0 1px; background: #fff; }
+
+@media (max-width: 767px) {
+  .library-header .header-inner { left: 0; width: 100%; height: 56px; padding: 0 16px; align-items: center; transform: none; }
+  .library-header .primary-nav, .library-header .language, .library-header .account { display: none; }
+  .library-header .header-actions { margin-left: auto; }
+}
+
+/* Figma 2387:4199 — four staggered cards over 400px background panels. */
+.library-more-card,
+.library-more-card.art,
+.library-more-card.product { background: transparent; }
+.library-more-card::before {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 400px;
+  background: #3a3a3a;
+  transition: background-color .45s cubic-bezier(.22, 1, .36, 1), box-shadow .45s cubic-bezier(.22, 1, .36, 1);
+  content: "";
+}
+.library-more-card:nth-child(even)::before { top: 100px; background: #494949; }
+.library-more-card:hover::before,
+.library-more-card:focus-visible::before { background: var(--red); box-shadow: 0 16px 32px rgba(0, 0, 0, .2); }
+.library-more-card > img,
+.library-more-card > span { z-index: 1; }
+.library-more-card > img,
+.library-more-card.home > img,
+.library-more-card.art > img,
+.library-more-card.product > img { transform: none; transition: transform .48s cubic-bezier(.22, 1, .36, 1), box-shadow .48s ease; }
+.library-more-card:hover > img,
+.library-more-card:focus-visible > img { transform: translateY(-8px) scale(1.12); box-shadow: 0 18px 28px rgba(0, 0, 0, .26); }
+.library-more-card > span em b { display: inline-block; transition: transform .32s cubic-bezier(.22, 1, .36, 1); }
+.library-more-card:hover > span em b,
+.library-more-card:focus-visible > span em b { transform: translateX(6px); }
+.library-more-card:focus-visible { outline: 2px solid var(--yellow); outline-offset: 6px; }
+.library-more-card.home::after {
+  position: absolute;
+  z-index: 0;
+  top: 300px;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: linear-gradient(#111, #666);
+  content: "";
+}

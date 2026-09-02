@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="蜀锦数字纹样库" />
+    <title>数字纹样库｜锦官织境</title>
+    <link rel="icon" type="image/png" href="./public/figma-assets/logo-mark.png" />
+    <link rel="stylesheet" href="./pattern-library.css" />
+    <link rel="stylesheet" href="./pattern-library-overrides.css" />
+  </head>
+  <body>
+    <header class="library-header site-header">
+      <div class="design-canvas">
+        <div class="header-inner">
+          <a class="brand" href="./index.html" aria-label="返回锦官织境首页"><img class="brand-mark-image" src="./public/figma-assets/logo-mark.png" alt="" /><span class="brand-words"><img src="./public/figma-assets/logo-wordmark.svg" alt="锦官织境" /><img src="./public/figma-assets/logo-submark.svg" alt="" /></span></a>
+          <nav class="primary-nav" aria-label="主导航"><a href="./index.html">首页</a><a class="active" href="./digital-pattern-library.html">数字纹样库</a><a href="#more">数字艺术作品</a><a href="#more">AI生成纹样</a><a href="#more">文创产品</a></nav>
+          <div class="header-actions"><button class="icon-button" type="button" aria-label="聚焦搜索"><img src="./public/figma-assets/search.svg" alt="" /></button><button class="language" type="button">简体中文 <img class="language-caret" src="./public/icons/Polygon 1.svg" alt="" /></button><button class="account" type="button"><span>登录</span><b></b><span>注册</span></button></div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="library-hero" aria-labelledby="library-title">
+        <div class="library-hero-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="library-container"><h1 id="library-title">数字纹样库</h1><p>你可以在这里找到并下载你需要的蜀锦纹样素材</p></div>
+      </section>
+
+      <section class="library-content" aria-label="纹样检索与列表">
+        <div class="library-container">
+          <form class="library-search" role="search"><button class="library-category" type="button">所有纹样 <b aria-hidden="true"></b></button><label><img class="search-glyph" src="./public/icons/icon-search.svg" alt="" /><input id="pattern-search" type="search" placeholder="搜索" autocomplete="off" /></label><button class="library-search-submit" type="submit" aria-label="搜索"><img src="./public/icons/icon-arrow.svg" alt="" /></button></form>
+          <div class="library-filter-row"><div class="library-filters"><button type="button" data-filter="subject"><span>纹样题材</span><b aria-hidden="true"></b></button><button type="button" data-filter="composition"><span>构图形式</span><b aria-hidden="true"></b></button><button type="button" data-filter="era"><span>来源朝代</span><b aria-hidden="true"></b></button><button type="button" data-filter="color"><span>色彩属性</span><b aria-hidden="true"></b></button></div><div class="library-price"><button class="active" type="button" data-price="all">所有</button><button type="button" data-price="paid">付费</button><button type="button" data-price="free">免费</button></div></div>
+          <div class="library-divider"></div>
+          <div id="pattern-grid" class="pattern-grid"></div>
+          <nav class="library-pagination" aria-label="分页"><button class="active" type="button">1</button><button type="button">2</button><button type="button" aria-label="下一页"><img src="./public/icons/Polygon 10.svg" alt="" /></button></nav>
+        </div>
+      </section>
+    </main>
+
+    <section class="library-more" id="more"><div class="library-container"><div class="library-more-intro"><h2>更多精彩内容<br />等你探索</h2><div class="library-more-line" aria-hidden="true"></div></div><div class="library-more-cards"><a class="library-more-card home" href="./index.html"><img src="./public/shujin-weaving-product/loom-colored.png" alt="" /><span><strong>首页</strong><small>你可以在这里了解蜀锦纹样的演变、探索织造工序、构成规律与色彩体系</small><em>了解更多 <b>→</b></em></span></a><a class="library-more-card art" href="#"><img src="./public/digital-artworks/digital-art-images/digital-art-01.png" alt="" /><span><strong>数字艺术作品</strong><small>你可以在这里探索蜀锦文化与数字艺术融合的创新表达</small><em>了解更多 <b>→</b></em></span></a><a class="library-more-card ai" href="#"><img src="./public/ai-pattern-generation/ai-wisteria-pendant-pattern.png" alt="" /><span><strong>AI生成纹样</strong><small>你可以在这里通过 AI 创作出属于你的个性化蜀锦纹样</small><em>了解更多 <b>→</b></em></span></a><a class="library-more-card product" href="#"><img src="./public/cultural-products/cultural-product-assets/bag-02.png" alt="" /><span><strong>文创产品</strong><small>你可以在这里发现蜀锦文创或定制专属于你的文化好物</small><em>了解更多 <b>→</b></em></span></a></div></div></section>
+    <footer class="library-footer"><div class="library-container"><div></div><p>邮箱：contact@ShuBrocadeCulturePlatform.cn</p><p>锦官织境蜀锦数字文化平台　|　©2026 SHUBROCADE　　川ICP备XXXXXXXX号-7　 川公网安备 XXXXXXXXXXXXXX号</p></div></footer>
+    <script src="./pattern-library.js"></script>
+  </body>
+</html>
