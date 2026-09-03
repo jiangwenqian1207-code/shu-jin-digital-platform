@@ -338,8 +338,9 @@ a{text-decoration:none}
 .color-note{position:absolute;left:50%;top:812px;width:780px;margin:0;color:#d8d8d8;text-align:center;font-size:16px;line-height:24px;letter-spacing:.8px;transform:translateX(-50%)}
 
 /* Footer */
-.site-footer{--footer-bg-width:84vw;position:absolute;z-index:8;left:0;top:calc(7891px + var(--tools-pin-distance) + var(--flow-expansion));width:100%;height:733px;background:#000;overflow:hidden}
-.footer-canvas{display:block}
+.site-footer{--footer-bg-width:1920px;position:absolute;z-index:8;left:0;top:calc(7891px + var(--tools-pin-distance) + var(--flow-expansion));width:100%;height:733px;background:#000;overflow:hidden}
+.footer-canvas{position:relative;left:50%;display:block;width:1920px;max-width:none;margin:0;transform:translateX(-50%)}
+@media(max-width:767px){.footer-canvas{left:auto;width:100%;max-width:100%;transform:none}}
 .footer-discovery{position:relative;height:600px;overflow:hidden;background:#073363}
 .footer-discovery::before{content:"";position:absolute;z-index:0;left:50%;top:0;width:var(--footer-bg-width);height:100%;background:var(--deep-blue);transform:translateX(-50%);will-change:width}
 .footer-discovery-inner{position:relative;z-index:1;width:1200px;height:600px;margin:0 auto}

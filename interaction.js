@@ -623,8 +623,8 @@
     if (!footerDiscovery) return;
 
     const viewportWidth = document.documentElement.clientWidth;
-    const collapsedWidth = viewportWidth * 0.84;
-    const expandedWidth = viewportWidth;
+    const collapsedWidth = 1920;
+    const expandedWidth = Math.max(viewportWidth, collapsedWidth);
 
     if (reducedMotion.matches || expandedWidth <= collapsedWidth) {
       footerDiscovery.parentElement.style.setProperty('--footer-bg-width', `${expandedWidth}px`);
