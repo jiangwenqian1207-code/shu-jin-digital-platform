@@ -1,0 +1,88 @@
+.login-links button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* Use the approved horizontal brand asset in the login dialog. */
+.login-dialog {
+  overscroll-behavior: contain;
+}
+
+.login-brand {
+  gap: 0;
+}
+
+.login-brand > img {
+  width: 154px;
+  height: 38px;
+  content: url("./public/icons/logo-horizontal-full.svg");
+}
+
+.login-brand > span {
+  display: none;
+}
+
+.password-toggle {
+  width: 24px;
+  height: 24px;
+}
+
+.password-toggle img {
+  width: 24px;
+  height: 24px;
+}
+
+.register-dialog .login-dialog-surface {
+  padding-bottom: 56px;
+}
+
+.register-dialog .login-dialog h2,
+.register-dialog h2 {
+  margin-top: 25px;
+}
+
+.register-form {
+  gap: 12px;
+}
+
+.register-code-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 104px;
+  gap: 8px;
+}
+
+.register-code-row .login-field {
+  min-width: 0;
+}
+
+.register-code-send {
+  height: 48px;
+  border: 0;
+  border-radius: 4px;
+  background: #181a1a;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  opacity: .65;
+  transition: opacity .2s ease, background-color .2s ease;
+}
+
+.register-code-send:hover,
+.register-code-send:focus-visible {
+  background: var(--yellow, #eeac35);
+  color: var(--ink, #181a1a);
+  opacity: 1;
+}
+
+.register-dialog .login-agreement {
+  margin-top: 8px;
+}
+
+@media (max-width: 560px) {
+  .register-dialog .login-dialog-surface {
+    padding-bottom: 24px;
+  }
+}

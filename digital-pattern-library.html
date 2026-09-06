@@ -8,6 +8,8 @@
     <link rel="icon" type="image/png" href="./public/figma-assets/logo-mark.png" />
     <link rel="stylesheet" href="./pattern-library.css" />
     <link rel="stylesheet" href="./pattern-library-overrides.css" />
+    <link rel="stylesheet" href="./login-modal.css" />
+    <link rel="stylesheet" href="./login-modal-overrides.css" />
   </head>
   <body>
     <header class="library-header site-header">
@@ -15,7 +17,7 @@
         <div class="header-inner">
           <a class="brand" href="./index.html" aria-label="返回锦官织境首页"><img class="brand-mark-image" src="./public/figma-assets/logo-mark.png" alt="" /><span class="brand-words"><img src="./public/figma-assets/logo-wordmark.svg" alt="锦官织境" /><img src="./public/figma-assets/logo-submark.svg" alt="" /></span></a>
           <nav class="primary-nav" aria-label="主导航"><a href="./index.html">首页</a><a class="active" href="./digital-pattern-library.html">数字纹样库</a><a href="#more">数字艺术作品</a><a href="#more">AI生成纹样</a><a href="#more">文创产品</a></nav>
-          <div class="header-actions"><button class="icon-button" type="button" aria-label="聚焦搜索"><img src="./public/figma-assets/search.svg" alt="" /></button><button class="language" type="button">简体中文 <img class="language-caret" src="./public/icons/Polygon 1.svg" alt="" /></button><button class="account" type="button"><span>登录</span><b></b><span>注册</span></button></div>
+          <div class="header-actions"><button class="icon-button" type="button" aria-label="聚焦搜索"><img src="./public/figma-assets/search.svg" alt="" /></button><div class="language-switcher"><button class="language" type="button" aria-expanded="false" aria-controls="language-menu"><span class="language-label">简体中文</span><img class="language-caret" src="./public/icons/Polygon 1.svg" alt="" /></button><div class="language-menu" id="language-menu" hidden role="menu"><button type="button" role="menuitem" data-language="繁体中文">繁体中文</button><button type="button" role="menuitem" data-language="English">English</button></div></div><div class="account" aria-label="账号入口"><button class="account-choice" type="button" data-show-login>登录</button><b aria-hidden="true"></b><button class="account-choice" type="button" data-show-register>注册</button></div></div>
         </div>
       </div>
     </header>
@@ -39,6 +41,27 @@
 
     <section class="library-more" id="more"><div class="library-container"><div class="library-more-intro"><h2>更多精彩内容<br />等你探索</h2><div class="library-more-line" aria-hidden="true"></div></div><div class="library-more-cards"><a class="library-more-card home" href="./index.html"><span class="library-more-art"><img src="./public/shujin-weaving-product/loom-colored.png" alt="" /></span><span><strong>首页</strong><small>你可以在这里了解蜀锦纹样的演变、探索织造工序、构成规律与色彩体系</small><em>了解更多 <b>→</b></em></span></a><a class="library-more-card art" href="#"><span class="library-more-art"><img src="./public/digital-artworks/digital-art-images/digital-art-01.png" alt="" /></span><span><strong>数字艺术作品</strong><small>你可以在这里探索蜀锦文化与数字艺术融合的创新表达</small><em>了解更多 <b>→</b></em></span></a><a class="library-more-card ai" href="#"><span class="library-more-art"><img src="./public/ai-pattern-generation/ai-wisteria-pendant-pattern.png" alt="" /></span><span><strong>AI生成纹样</strong><small>你可以在这里通过 AI 创作出属于你的个性化蜀锦纹样</small><em>了解更多 <b>→</b></em></span></a><a class="library-more-card product" href="#"><span class="library-more-art"><img src="./public/cultural-products/cultural-product-assets/bag-02.png" alt="" /></span><span><strong>文创产品</strong><small>你可以在这里发现蜀锦文创或定制专属于你的文化好物</small><em>了解更多 <b>→</b></em></span></a></div></div></section>
     <footer class="library-footer"><div class="library-container"><div></div><p>邮箱：contact@ShuBrocadeCulturePlatform.cn</p><p>锦官织境蜀锦数字文化平台　|　©2026 SHUBROCADE　　川ICP备XXXXXXXX号-7　 川公网安备 XXXXXXXXXXXXXX号</p></div></footer>
+    <div class="login-dialog" hidden role="dialog" aria-modal="true" aria-labelledby="login-dialog-title"><div class="login-dialog-card" tabindex="-1"><div class="login-dialog-surface"><button class="login-close" type="button" data-login-close aria-label="关闭登录弹窗"><img src="./public/icons/icon-dialog-close.svg" alt="" /></button><div class="login-brand"><img src="./public/figma-assets/logo-mark.png" alt="" /><span><img src="./public/figma-assets/logo-wordmark.svg" alt="锦官织境" /><img src="./public/figma-assets/logo-submark.svg" alt="" /></span></div><h2 id="login-dialog-title">账号登录</h2><p class="login-description">登录后你可以：收藏蜀锦纹样、下载纹样源文件、保存 AI 生成记录、创建个人灵感集、发布数字艺术作品、管理文创产品订单等。</p><form class="login-form"><label class="login-field"><img src="./public/icons/icon-login-email.svg" alt="" /><input id="login-email" type="text" autocomplete="username" placeholder="请输入您的邮箱账号或手机" /></label><label class="login-field"><img src="./public/icons/icon-login-password.svg" alt="" /><input id="login-password" type="password" autocomplete="current-password" placeholder="请输入您的密码" /><button class="password-toggle" type="button" aria-label="显示或隐藏密码"><img src="./public/icons/icon-login-eye-off.svg" alt="" /></button></label><label class="login-agreement"><input id="login-agreement" type="checkbox" /><span>已阅读并同意锦官织境账号<b>用户协议</b>和<b>隐私政策</b></span></label><button class="login-submit" type="submit" disabled>登录</button></form><div class="login-links"><button type="button">忘记密码</button><button type="button">短信验证码登录</button></div><div class="login-divider">其他登录方式</div><div class="login-socials"><button type="button" aria-label="微信登录"><img src="./public/icons/icon-login-wechat.svg" alt="" /></button><button type="button" aria-label="QQ 登录"><img src="./public/icons/icon-login-qq.svg" alt="" /></button></div></div><p class="login-register">没有账号？<button type="button">注册</button></p></div></div>
+    <div class="login-dialog register-dialog" hidden role="dialog" aria-modal="true" aria-labelledby="register-dialog-title">
+      <div class="login-dialog-card" tabindex="-1">
+        <div class="login-dialog-surface">
+          <button class="login-close" type="button" data-register-close aria-label="关闭注册弹窗"><img src="./public/icons/icon-dialog-close.svg" alt="" /></button>
+          <div class="login-brand"><img src="./public/icons/logo-horizontal-full.svg" alt="锦官织境 Shu Brocade Culture Platform" /></div>
+          <h2 id="register-dialog-title">账号注册</h2>
+          <p class="login-description">注册后你可以：收藏蜀锦纹样、下载纹样源文件、保存 AI 生成记录、创建个人灵感集、发布数字艺术作品、管理文创产品订单等。</p>
+          <form class="login-form register-form">
+            <label class="login-field"><img src="./public/icons/icon-login-email.svg" alt="" /><input id="register-email" type="text" autocomplete="username" placeholder="请输入您的邮箱账号或手机" /></label>
+            <label class="login-field"><img src="./public/icons/icon-login-password.svg" alt="" /><input id="register-password" type="password" autocomplete="new-password" placeholder="请输入您的密码" /><button class="password-toggle" type="button" aria-label="显示或隐藏密码"><img src="./public/icons/icon-login-eye-off.svg" alt="" /></button></label>
+            <label class="login-field"><img src="./public/icons/icon-login-password.svg" alt="" /><input id="register-confirm-password" type="password" autocomplete="new-password" placeholder="确认密码" /><button class="password-toggle" type="button" aria-label="显示或隐藏密码"><img src="./public/icons/icon-login-eye-off.svg" alt="" /></button></label>
+            <div class="register-code-row"><label class="login-field"><img src="./public/icons/icon-register-security.svg" alt="" /><input id="register-code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="验证码" /></label><button class="register-code-send" type="button">发送验证</button></div>
+            <label class="login-agreement"><input id="register-agreement" type="checkbox" /><span>已阅读并同意锦官织境账号<b>用户协议</b>和<b>隐私政策</b></span></label>
+            <button class="login-submit" type="submit" disabled>注册</button>
+          </form>
+        </div>
+        <p class="login-register">已有账号？<button type="button" data-show-login>登录</button></p>
+      </div>
+    </div>
     <script src="./pattern-library.js"></script>
+    <script src="./login-modal.js"></script>
   </body>
 </html>

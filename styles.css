@@ -32,10 +32,18 @@ a{text-decoration:none}
 .header-actions{margin-left:auto;height:32px;display:flex;align-items:center;gap:24px}
 .icon-button{width:20.25px;height:20.25px;padding:0;border:0;background:none}
 .icon-button img{display:block;width:100%;height:100%}
-.language{display:flex;align-items:center;gap:8px;padding:0;border:0;background:none;font-size:16px;white-space:nowrap}
-.language span{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:7px solid white;transform:translateY(2px)}
+.language-switcher{position:relative}
+.language{display:flex;align-items:center;gap:8px;padding:0;border:0;background:none;color:#fff;font:inherit;font-size:16px;white-space:nowrap;cursor:pointer;transition:color .2s ease}
+.language:hover,.language:focus-visible,.language[aria-expanded="true"]{color:var(--yellow,#eeac35);outline:0}
+.language span.language-caret{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:7px solid currentColor;transform:translateY(2px);transition:transform .2s ease}
+.language[aria-expanded="true"] span.language-caret{transform:translateY(2px) rotate(180deg)}
+.language-menu{position:absolute;z-index:1200;top:44px;left:50%;width:104px;padding:6px 0;background:#fff;box-shadow:0 8px 20px rgba(0,0,0,.2);transform:translateX(-50%)}
+.language-menu button{display:block;width:100%;height:26px;padding:0;border:0;background:#fff;color:#626366;font:inherit;font-size:14px;cursor:pointer;transition:color .2s ease}
+.language-menu button+button{border-top:1px solid #e1e6e6}
+.language-menu button:hover,.language-menu button:focus-visible{color:var(--yellow,#eeac35);outline:0}
 .account{width:112px;height:32px;padding:0 16px;border:1px solid #fff;border-radius:37px;background:transparent;display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px}
-.account span{display:block;width:32px;line-height:23px;white-space:nowrap}
+.account-choice{display:block;padding:0;border:0;background:transparent;color:#fff;font:inherit;line-height:23px;white-space:nowrap;cursor:pointer;transition:color .2s ease}
+.account-choice:hover,.account-choice:focus-visible,.account-choice.active{color:var(--yellow,#eeac35);outline:0}
 .account b{display:block;flex:0 0 1px;width:1px;height:16px;background:#fff;box-shadow:0 0 0 .25px rgba(255,255,255,.8)}
 .mobile-menu-toggle,.mobile-menu-backdrop,.mobile-menu-panel{display:none}
 
