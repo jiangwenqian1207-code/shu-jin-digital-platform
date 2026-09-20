@@ -28,14 +28,84 @@
 .pattern-download::after { color: var(--ink); transform: translateY(100%); }
 
 .pattern-download:hover,
-.pattern-download:focus-visible {
+.pattern-download:focus-visible,
+.pattern-download[aria-expanded="true"] {
   background-color: var(--yellow);
 }
 
 .pattern-download:hover::before,
-.pattern-download:focus-visible::before { transform: translateY(-100%); }
+.pattern-download:focus-visible::before,
+.pattern-download[aria-expanded="true"]::before { transform: translateY(-100%); }
 .pattern-download:hover::after,
-.pattern-download:focus-visible::after { transform: translateY(0); }
+.pattern-download:focus-visible::after,
+.pattern-download[aria-expanded="true"]::after { transform: translateY(0); }
+
+/* Figma 2387:4700 — download format menu. */
+.pattern-download-wrap {
+  position: relative;
+  width: calc(100% - 16px);
+  margin: 0 8px;
+}
+
+.pattern-download-wrap .pattern-download {
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.pattern-download-menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 2px);
+  left: 50%;
+  display: grid;
+  width: 200px;
+  height: 125px;
+  padding: 16px 0 20px;
+  gap: 8px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, .12);
+  transform: translateX(-50%);
+}
+
+.pattern-download-menu[hidden] { display: none; }
+
+.pattern-download-menu button {
+  position: relative;
+  z-index: 0;
+  height: 24px;
+  padding: 0 19px;
+  border: 0;
+  background: transparent;
+  color: #343436;
+  font: inherit;
+  font-size: 16px;
+  letter-spacing: .8px;
+  line-height: 24px;
+  text-align: left;
+}
+
+.pattern-download-menu button:hover,
+.pattern-download-menu button:focus-visible {
+  background: #eeac35;
+  box-shadow: 0 4px 0 #eeac35, 0 -4px 0 #eeac35;
+  outline: 0;
+}
+
+.pattern-card.is-download-open {
+  position: relative;
+  z-index: 10;
+  overflow: visible;
+}
+
+@media (max-width: 767px) {
+  .pattern-download-wrap {
+    width: calc(100% - 24px);
+    margin-right: 12px;
+    margin-left: 12px;
+  }
+}
 
 .language-caret {
   width: 11px;
@@ -62,6 +132,72 @@
 .library-search-submit {
   flex: none;
   margin-left: 8px;
+}
+
+/* Figma 1915:1834 — pattern category menu beneath the black category pill. */
+.library-category-wrap {
+  position: relative;
+  width: 144px;
+  height: 48px;
+  flex: none;
+}
+
+.library-category-wrap .library-category {
+  width: 144px;
+}
+
+.library-category[aria-expanded="true"] b {
+  transform: rotate(180deg);
+}
+
+.library-category-menu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  left: 0;
+  display: grid;
+  width: 144px;
+  height: 112px;
+  padding: 8px 10px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 40px rgba(199, 200, 203, .5);
+}
+
+.library-category-menu[hidden] { display: none; }
+
+.library-category-menu button {
+  width: 100%;
+  height: 32px;
+  padding: 4px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #939497;
+  font: inherit;
+  font-size: 16px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.library-category-menu button:hover,
+.library-category-menu button:focus-visible,
+.library-category-menu button.active {
+  background: #f6f6f3;
+  outline: 0;
+}
+
+.library-category-menu button.active:hover { background: #f6f6f3; }
+
+.library-category-menu button:hover,
+.library-category-menu button:focus-visible,
+.library-category-menu button.active {
+  color: #343436;
+}
+
+/* Hovering another item should show only that item's feedback, not the saved selection. */
+.library-category-menu:has(button:hover) button.active:not(:hover) {
+  background: transparent;
 }
 
 /* Homepage navigation structure, shared by the library page. */
@@ -95,8 +231,13 @@
 
 @media (max-width: 767px) {
   .library-header .header-inner { left: 0; width: 100%; height: 56px; padding: 0 16px; align-items: center; transform: none; }
-  .library-header .primary-nav, .library-header .language-switcher, .library-header .account { display: none; }
-  .library-header .header-actions { margin-left: auto; }
+  .library-header .primary-nav { display: none; }
+  .library-header .header-actions { margin-left: auto; gap: 16px; }
+}
+
+@media (max-width: 480px) {
+  .library-header .account,
+  .library-header .profile-switcher { display: none; }
 }
 
 /* Figma 2387:4199 — four staggered cards over 400px background panels. */

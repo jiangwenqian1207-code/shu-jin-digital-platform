@@ -1,0 +1,51 @@
+/* Shared header and footer — Figma 2633:46. */
+.site-header .primary-nav { width: auto; gap: 56px; }
+.global-footer { width: 100%; background: #000; color: #939497; font-family: SourceHanSans, "Microsoft YaHei", sans-serif; }
+.global-footer-inner { width: min(1200px, calc(100% - 48px)); margin: 0 auto; }
+.global-footer-top { display: grid; grid-template-columns: 329px 111px 64px 64px minmax(0, 1fr); column-gap: 88px; padding-top: 79px; padding-bottom: 40px; }
+.global-footer-brand { margin-right: 64px; width: 265px; }
+.footer-logo { display: flex; align-items: center; gap: 6px; width: 155px; height: 37px; }
+.footer-logo > img { width: 36px; height: 36px; }
+.footer-logo > span { display: flex; width: 113px; flex-direction: column; gap: 6px; }
+.footer-logo > span img { display: block; width: 113px; height: auto; }
+.global-footer-brand > p { margin: 17px 0 24px; color: rgba(255,255,255,.65); font-size: 16px; line-height: 24px; }
+.global-footer h3 { margin: 0; color: rgba(255,255,255,.85); font-size: 24px; line-height: 36px; font-weight: 700; }
+.footer-links { display: flex; flex-direction: column; gap: 20px; white-space: nowrap; }
+.footer-links a, .footer-links span { color: #939497; text-decoration: none; font-size: 16px; line-height: 24px; }
+.footer-links a:hover { color: var(--yellow, #eeac35); }
+.footer-subscribe h3 { font-size: 20px; line-height: 30px; font-weight: 500; margin-bottom: 16px; }
+.footer-subscribe label { display: flex; gap: 16px; align-items: center; border-bottom: 1px solid #939497; padding-bottom: 8px; }
+.footer-subscribe label img, .footer-contact p img { width: 24px; height: 24px; flex: none; }
+.footer-subscribe input { width: 100%; min-width: 0; padding: 0; border: 0; background: transparent; color: #fff; font: inherit; font-size: 16px; outline-offset: 4px; }
+.footer-subscribe input::placeholder { color: rgba(255,255,255,.65); }
+.footer-subscribe button { margin-top: 12px; width: 119px; height: 32px; padding: 0; border: 0; border-radius: 4px; background: #fff; color: #343436; font: inherit; font-size: 16px; opacity: 1; }
+.footer-contact p { display: flex; align-items: center; gap: 16px; margin: 20px 0 0; font-size: 16px; line-height: 24px; white-space: nowrap; color: rgba(255,255,255,.65); }
+.footer-socials { display: flex; gap: 20px; margin-top: 37px; }
+.footer-socials img { display: block; width: 28px; height: 28px; }
+.global-footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid #343436; padding: 40px 0; color: rgba(255,255,255,.45); font-size: 14px; line-height: 21px; }
+.global-footer-bottom p { margin: 0; }
+/* The homepage uses a positioned storytelling canvas. */
+.page > .global-footer { position: absolute; top: calc(7891px + var(--tools-pin-distance) + var(--flow-expansion)); left: 0; z-index: 8; }
+.page, .page-shell { min-height: calc(8370px + var(--tools-pin-distance) + var(--flow-expansion)); }
+.page { height: calc(8370px + var(--tools-pin-distance) + var(--flow-expansion)); }
+@media (min-width: 768px) and (max-width: 1199px) {
+  .site-header .primary-nav { gap: 24px; }
+  .global-footer-top { grid-template-columns: 265px 1fr 1fr 1fr; gap: 40px; }
+  .global-footer-brand { margin: 0; }
+  .footer-contact { grid-column: 2 / -1; }
+  .global-footer-bottom { flex-wrap: wrap; }
+  .page, .page-shell { min-height: calc(8651px + var(--tools-pin-distance) + var(--flow-expansion)); }
+  .page { height: calc(8651px + var(--tools-pin-distance) + var(--flow-expansion)); }
+}
+@media (max-width: 767px) {
+  .global-footer-inner { width: calc(100% - 40px); }
+  .global-footer-top { padding-top: 40px; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 20px; }
+  .global-footer-brand, .footer-contact { grid-column: 1 / -1; }
+  .global-footer-brand { width: min(265px, 100%); margin: 0; }
+  .global-footer h3 { font-size: 20px; }
+  .footer-links { gap: 14px; }
+  .footer-contact p { gap: 10px; font-size: 14px; }
+  .global-footer-bottom { flex-direction: column; align-items: flex-start; padding: 28px 0; font-size: 12px; overflow-wrap: anywhere; }
+  .page > .global-footer { position: relative; top: auto; left: auto; }
+  .page, .page-shell { height: auto; min-height: 0; }
+}

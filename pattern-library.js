@@ -20,16 +20,68 @@
   const search = document.querySelector('#pattern-search');
   const form = document.querySelector('.library-search');
   const priceButtons = [...document.querySelectorAll('[data-price]')];
+  const categoryButton = document.querySelector('.library-category');
+  const categoryMenu = document.querySelector('.library-category-menu');
   let price = 'all';
   const draw = () => {
     const keyword = search.value.trim();
-    grid.innerHTML = patterns.filter((item) => (price === 'all' || (price === 'free') === (item[2] === '免费')) && item[0].includes(keyword)).map((item) => `<article class="pattern-card"><div class="pattern-meta"><span class="pattern-tag ${item[2] === 'AI' ? 'ai' : ''}">${item[2]}</span><span class="pattern-views">${item[3]}<button class="pattern-favorite" type="button" aria-label="收藏 ${item[0]}" aria-pressed="false"><img src="./public/icons/icon-favorite-default.svg" alt="" /></button></span></div><img class="pattern-image" src="${item[1]}" alt="${item[0]}" /><div class="pattern-info"><strong>${item[0]}</strong><span class="pattern-price">￥${item[4]}</span></div><button class="pattern-download" type="button">下载</button></article>`).join('') || '<p class="pattern-empty">没有找到匹配的纹样。</p>';
+    grid.innerHTML = patterns.filter((item) => (price === 'all' || (price === 'free') === (item[2] === '免费')) && item[0].includes(keyword)).map((item) => `<article class="pattern-card"><div class="pattern-meta"><span class="pattern-tag ${item[2] === 'AI' ? 'ai' : ''}">${item[2]}</span><span class="pattern-views">${item[3]}<button class="pattern-favorite" type="button" aria-label="收藏 ${item[0]}" aria-pressed="false"><img src="./public/icons/icon-favorite-default.svg" alt="" /></button></span></div><img class="pattern-image" src="${item[1]}" alt="${item[0]}" /><div class="pattern-info"><strong>${item[0]}</strong><span class="pattern-price">￥${item[4]}</span></div><div class="pattern-download-wrap"><button class="pattern-download" type="button" aria-expanded="false">下载</button><div class="pattern-download-menu" hidden role="menu" aria-label="${item[0]} 下载格式"><button type="button" role="menuitem" data-download-format="SVG">下载SVG</button><button type="button" role="menuitem" data-download-format="PNG">下载PNG</button><button type="button" role="menuitem" data-download-format="source">下载源文件</button></div></div></article>`).join('') || '<p class="pattern-empty">没有找到匹配的纹样。</p>';
   };
   draw();
   form.addEventListener('submit', (event) => { event.preventDefault(); draw(); });
   search.addEventListener('input', draw);
-  priceButtons.forEach((button) => button.addEventListener('click', () => { price = button.dataset.price; priceButtons.forEach((item) => item.classList.toggle('active', item === button)); draw(); }));
+  const selectPrice = (nextPrice) => {
+    price = nextPrice;
+    priceButtons.forEach((item) => item.classList.toggle('active', item.dataset.price === nextPrice));
+    categoryMenu?.querySelectorAll('[data-category-price]').forEach((item) => item.classList.toggle('active', item.dataset.categoryPrice === nextPrice));
+    if (categoryButton) {
+      const labels = { all: '所有纹样', paid: '付费纹样', free: '免费纹样' };
+      categoryButton.childNodes[0].nodeValue = `${labels[nextPrice]} `;
+    }
+    draw();
+  };
+  priceButtons.forEach((button) => button.addEventListener('click', () => selectPrice(button.dataset.price)));
+  const closeCategoryMenu = () => {
+    if (!categoryMenu || !categoryButton) return;
+    categoryMenu.hidden = true;
+    categoryButton.setAttribute('aria-expanded', 'false');
+  };
+  categoryButton?.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const isOpen = categoryButton.getAttribute('aria-expanded') === 'true';
+    categoryMenu.hidden = isOpen;
+    categoryButton.setAttribute('aria-expanded', String(!isOpen));
+  });
+  categoryMenu?.querySelectorAll('[data-category-price]').forEach((item) => item.addEventListener('click', () => {
+    selectPrice(item.dataset.categoryPrice);
+    closeCategoryMenu();
+  }));
+  document.addEventListener('click', (event) => { if (!event.target.closest('.library-category-wrap')) closeCategoryMenu(); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeCategoryMenu(); });
+  const closeDownloadMenus = () => {
+    grid.querySelectorAll('.pattern-download-menu').forEach((menu) => { menu.hidden = true; });
+    grid.querySelectorAll('.pattern-download').forEach((button) => { button.setAttribute('aria-expanded', 'false'); });
+    grid.querySelectorAll('.pattern-card.is-download-open').forEach((card) => card.classList.remove('is-download-open'));
+  };
   grid.addEventListener('click', (event) => {
+    const download = event.target.closest('.pattern-download');
+    if (download) {
+      const card = download.closest('.pattern-card');
+      const menu = card?.querySelector('.pattern-download-menu');
+      const isOpen = download.getAttribute('aria-expanded') === 'true';
+      closeDownloadMenus();
+      if (!isOpen && menu) {
+        menu.hidden = false;
+        download.setAttribute('aria-expanded', 'true');
+        card.classList.add('is-download-open');
+      }
+      return;
+    }
+    const downloadOption = event.target.closest('[data-download-format]');
+    if (downloadOption) {
+      closeDownloadMenus();
+      return;
+    }
     const favorite = event.target.closest('.pattern-favorite');
     if (!favorite) return;
     const active = !favorite.classList.contains('active');
@@ -39,6 +91,10 @@
       ? './public/icons/icon-favorite-active.svg'
       : './public/icons/icon-favorite-default.svg';
   });
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.pattern-download-wrap')) closeDownloadMenus();
+  });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeDownloadMenus(); });
   const headerSearchButton = document.querySelector('.library-search-button, .library-header .icon-button');
   headerSearchButton?.addEventListener('click', () => search.focus());
 })();

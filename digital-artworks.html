@@ -3,39 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="蜀锦数字纹样库" />
-    <title>数字纹样库｜锦官织境</title>
+    <meta name="description" content="探索蜀锦文化与数字艺术融合的创新表达：经纬之间、纹生花境、游粒成纹、声纹共振。" />
+    <title>数字艺术作品｜锦官织境</title>
     <link rel="icon" type="image/png" href="./public/figma-assets/logo-mark.png" />
     <link rel="stylesheet" href="./pattern-library.css" />
     <link rel="stylesheet" href="./pattern-library-overrides.css" />
     <link rel="stylesheet" href="./login-modal.css" />
     <link rel="stylesheet" href="./login-modal-overrides.css" />
+    <link rel="stylesheet" href="./digital-artworks.css" />
     <link rel="stylesheet" href="./site-chrome.css" />
   </head>
-  <body>
+  <body class="artworks-page">
     <header class="library-header site-header">
       <div class="design-canvas">
         <div class="header-inner">
           <a class="brand" href="./index.html" aria-label="返回锦官织境首页"><img class="brand-mark-image" src="./public/figma-assets/logo-mark.png" alt="" /><span class="brand-words"><img src="./public/figma-assets/logo-wordmark.svg" alt="锦官织境" /><img src="./public/figma-assets/logo-submark.svg" alt="" /></span></a>
-<nav class="primary-nav" aria-label="主导航"><a href="./index.html">首页</a><a class="active" href="./digital-pattern-library.html">数字纹样库</a><a href="./digital-artworks.html">数字艺术作品</a><a aria-disabled="true">AI纹样创作空间</a></nav>
+<nav class="primary-nav" aria-label="主导航"><a href="./index.html">首页</a><a href="./digital-pattern-library.html">数字纹样库</a><a class="active" aria-current="page" href="./digital-artworks.html">数字艺术作品</a><a aria-disabled="true">AI纹样创作空间</a></nav>
           <div class="header-actions"><button class="icon-button" type="button" aria-label="聚焦搜索"><img src="./public/figma-assets/search.svg" alt="" /></button><div class="language-switcher"><button class="language" type="button" aria-expanded="false" aria-controls="language-menu"><span class="language-label">简体中文</span><img class="language-caret" src="./public/icons/Polygon 1.svg" alt="" /></button><div class="language-menu" id="language-menu" hidden role="menu"><button type="button" role="menuitem" data-language="繁体中文">繁体中文</button><button type="button" role="menuitem" data-language="English">English</button></div></div><div class="account" aria-label="账号入口"><button class="account-choice" type="button" data-show-login>登录</button><b aria-hidden="true"></b><button class="account-choice" type="button" data-show-register>注册</button></div></div>
         </div>
       </div>
     </header>
 
-    <main>
-      <section class="library-hero" aria-labelledby="library-title">
-        <div class="library-hero-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="library-container"><h1 id="library-title">数字纹样库</h1><p>你可以在这里找到并下载你需要的蜀锦纹样素材</p></div>
-      </section>
-
-      <section class="library-content" aria-label="纹样检索与列表">
-        <div class="library-container">
-          <form class="library-search" role="search"><div class="library-category-wrap"><button class="library-category" type="button" aria-expanded="false">所有纹样 <b aria-hidden="true"></b></button><div class="library-category-menu" hidden role="menu" aria-label="纹样类型"><button type="button" role="menuitem" data-category-price="free">免费纹样</button><button type="button" role="menuitem" data-category-price="paid">付费纹样</button><button class="active" type="button" role="menuitem" data-category-price="all">所有纹样</button></div></div><label><img class="search-glyph" src="./public/icons/icon-search.svg" alt="" /><input id="pattern-search" type="search" placeholder="搜索" autocomplete="off" /></label><button class="library-search-submit" type="submit" aria-label="搜索"><img src="./public/icons/icon-arrow.svg" alt="" /></button></form>
-          <div class="library-filter-row"><div class="library-filters"><button type="button" data-filter="subject"><span>纹样题材</span><b aria-hidden="true"></b></button><button type="button" data-filter="composition"><span>构图形式</span><b aria-hidden="true"></b></button><button type="button" data-filter="era"><span>来源朝代</span><b aria-hidden="true"></b></button><button type="button" data-filter="color"><span>色彩属性</span><b aria-hidden="true"></b></button></div><div class="library-price"><button class="active" type="button" data-price="all">所有</button><button type="button" data-price="paid">付费</button><button type="button" data-price="free">免费</button></div></div>
-          <div class="library-divider"></div>
-          <div id="pattern-grid" class="pattern-grid"></div>
-          <nav class="library-pagination" aria-label="分页"><button class="active" type="button">1</button><button type="button">2</button><button type="button" aria-label="下一页"><img src="./public/icons/Polygon 10.svg" alt="" /></button></nav>
+    <main class="artworks-main">
+      <section class="artworks-hero library-container"><h1>数字艺术作品</h1><p>你可以在这里探索蜀锦文化与数字艺术融合的创新表达</p></section>
+      <section class="artworks-content library-container" aria-label="数字艺术作品展示">
+        <nav class="artworks-filters" aria-label="作品分类"><a class="active" href="#artworks-gallery">所有</a><a class="" href="#particles">粒子交互</a><a class="" href="#weaving">编织交互</a><a class="" href="#flora">3D植物</a><a class="" href="#sound">音画互动</a></nav>
+        <div class="artworks-gallery" id="artworks-gallery">
+          <div class="artworks-guides" aria-hidden="true"><i style="left:0%" class="solid"></i><i style="left:15%" class=""></i><i style="left:17%" class=""></i><i style="left:32%" class="solid"></i><i style="left:34%" class="solid"></i><i style="left:49%" class=""></i><i style="left:51%" class=""></i><i style="left:66%" class="solid"></i><i style="left:68%" class="solid"></i><i style="left:83%" class=""></i><i style="left:85%" class=""></i><i style="left:100%" class="solid"></i></div>
+          <article class="artwork artwork-weaving" id="weaving">
+            <div class="artwork-media"><img src="./public/digital-artworks/digital-art-images/weaving-preview.png" alt="经纬之间（2026）静态作品预览" fetchpriority="high" /></div>
+            <div class="artwork-copy"><h2>经纬之间（2026）</h2><p>以蜀锦纹样为视觉基底，通过手势交互控制纹样的解构与重组，让传统织锦在数字空间中呈现流动、生成与再织的全新形态。</p><span class="artwork-tag">编织交互</span></div>
+          </article>
+<article class="artwork artwork-flora" id="flora">
+            <div class="artwork-media"><img src="./public/shu-brocade-floral/orchid-poster.jpg" alt="纹生花境（2025）静态作品预览" loading="lazy" /></div>
+            <div class="artwork-copy"><h2>纹生花境（2025）</h2><p>以蜀锦传统纹样为视觉基因，将纹样进行拆解、提取与重新组合，并通过数字建模转译为兰花、菊花、梅花、水仙与芙蓉等植物形态。二维织锦纹样由平面走向立体，在数字空间中重新生长，探索传统纹样在当代数字艺术语境中的新形态与新生命。</p><span class="artwork-tag">3D植物</span></div>
+          </article>
+<article class="artwork artwork-particles" id="particles">
+            <div class="artwork-media"><img src="./public/digital-artworks/digital-art-images/particles-preview.png" alt="游粒成纹（2026）静态作品预览" loading="lazy" /></div>
+            <div class="artwork-copy"><h2>游粒成纹（2026）</h2><p>作品以蜀锦纹样为视觉基础，将完整纹样转译为可实时运动的粒子系统。观众通过手势控制粒子的聚合与消散，使纹样在完整与碎片、生成与消解之间不断转换，形成一种由身体参与驱动的数字织构体验。</p><span class="artwork-tag">粒子交互</span></div>
+          </article>
+<article class="artwork artwork-sound" id="sound">
+            <div class="artwork-media"><img src="./public/digital-artworks/digital-art-images/digital-art-01.png" alt="声纹共振（2026）静态作品预览" loading="lazy" /></div>
+            <div class="artwork-copy"><h2>声纹共振（2026）</h2><p>作品以蜀锦纹样为基础，将纹样粒子化，并与音乐节奏实时联动，让纹样随着声音跳动、扩散与重组，形成音画共振的数字体验。</p><span class="artwork-tag">音画互动</span></div>
+          </article>
         </div>
       </section>
     </main>
@@ -76,7 +86,7 @@
         <p class="login-register">已有账号？<button type="button" data-show-login>登录</button></p>
       </div>
     </div>
-    <script src="./pattern-library.js"></script>
+    
     <script src="./login-modal.js"></script>
   </body>
 </html>
