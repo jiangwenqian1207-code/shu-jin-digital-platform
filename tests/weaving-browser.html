@@ -1,0 +1,45 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>Weaving browser checks</title>
+<style>body{background:#0c100f;color:#eee;font:14px sans-serif}section{display:flex;gap:12px}figure{margin:0;width:32%}canvas{width:100%;aspect-ratio:16/9}iframe{width:100%;height:900px;border:1px solid #555}pre{white-space:pre-wrap}</style>
+<h1>Weaving browser checks — no camera capture</h1><pre id="result">Starting…</pre>
+<section><figure>Released / 0<canvas id="a"></canvas></figure><figure>Half woven / .5<canvas id="b"></canvas></figure><figure>Fully woven / 1<canvas id="c"></canvas></figure></section>
+<h2>Camera denied (Permissions Policy)</h2><iframe src="../weaving.html" allow="camera 'none'; microphone 'none'" id="denied"></iframe>
+<button id="functional">Run page interaction checks</button><pre id="interaction-result"></pre>
+<script type="module">
+import { LoomRenderer } from '../weaving-renderer.mjs';
+const out=document.querySelector('#result');out.textContent='';const log=s=>out.textContent+=s+'\n';
+const image=new Image();image.src='../public/weaving/patterns/han-jin-five-stars-brocade-pattern.jpg';await image.decode();
+try{
+const renderers=['a','b','c'].map(id=>{const r=new LoomRenderer(document.getElementById(id));r.setImage(image);r.resize(1280,720);return r;});
+renderers.forEach((r,i)=>r.draw(i/2,1));log('PASS: WebGL compiled; released / half / full drawn');
+const worker=new Worker('../weaving-hands-worker.mjs');let start=performance.now();
+const timeout=setTimeout(()=>{log('FAIL: worker timeout');worker.terminate();},25000);
+worker.onmessage=async({data})=>{
+if(data.type==='ready'){log('PASS: local MediaPipe WASM + model initialized in worker');const frame=await createImageBitmap(image);start=performance.now();worker.postMessage({type:'frame',frame,time:performance.now()},[frame]);}
+if(data.type==='landmarks'){log('PASS: inference completed on supplied pattern (no human hand), '+Math.round(performance.now()-start)+'ms; '+(data.points?'hand detected':'no hand'));clearTimeout(timeout);worker.terminate();}
+if(data.type==='error'){log('FAIL: '+data.message);clearTimeout(timeout);worker.terminate();}
+};worker.onerror=e=>{log('FAIL worker: '+e.message);clearTimeout(timeout);};worker.postMessage({type:'init'});
+let frames=0,last=performance.now(),durations=[];
+function tick(now){durations.push(now-last);last=now;renderers.forEach((r,i)=>r.draw(i/2,1));if(++frames<120)requestAnimationFrame(tick);else{durations.sort((a,b)=>a-b);log('120-frame probe (3 canvases): median '+durations[60].toFixed(1)+'ms; p95 '+durations[114].toFixed(1)+'ms');}}
+requestAnimationFrame(tick);
+}catch(e){log('FAIL: '+e.stack);}
+setTimeout(()=>{const doc=document.querySelector('#denied').contentDocument;log('Camera denial status: '+doc.getElementById('camera-status').textContent);const art=doc.getElementById('loom').getBoundingClientRect(),info=doc.querySelector('.information-layer').getBoundingClientRect(),close=doc.querySelector('.close').getBoundingClientRect();log((art.bottom<=info.top&&art.top>=close.bottom?'PASS':'FAIL')+': animation bounds separate from UI');},4000);
+document.querySelector('#functional').onclick=async()=>{
+  const btn=document.querySelector('#functional');btn.disabled=true;
+  const f=document.querySelector('#denied'),d=f.contentDocument,w=f.contentWindow;
+  const output=document.querySelector('#interaction-result');output.textContent='';
+  const note=s=>output.textContent+=s+'\n',wait=ms=>new Promise(r=>setTimeout(r,ms));
+  w.dispatchEvent(new KeyboardEvent('keydown',{code:'Space'}));await wait(4200);
+  note((d.getElementById('weave-hold').classList.contains('is-held')?'PASS':'FAIL')+': Space hold activates weaving');
+  w.dispatchEvent(new KeyboardEvent('keyup',{code:'Space'}));await wait(100);
+  note((!d.getElementById('weave-hold').classList.contains('is-held')?'PASS':'FAIL')+': release clears hold');
+  for(let n=0;n<5;n++){
+    d.getElementById('pattern-next').click();await wait(700);
+    const chars=d.getElementById('pattern-description').textContent.length;
+    note((chars===0?'PASS':'FAIL')+': old typewriter cleared before new text');
+    await wait(700);
+    const index=d.getElementById('pattern-index').textContent;
+    note((index===String((n+1)%5+1).padStart(2,'0')?'PASS':'FAIL')+': next pattern '+index);
+  }
+  await wait(700);note((d.getElementById('pattern-description').textContent.length>0?'PASS':'FAIL')+': new typewriter advances');btn.disabled=false;
+};
+</script></html>

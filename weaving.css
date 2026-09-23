@@ -1,0 +1,39 @@
+@font-face { font-family: SourceHanSans; src: url('./public/fonts/SourceHanSansCN-VF.ttf.woff2') format('woff2'); font-display: swap; }
+:root { color-scheme: dark; --ground: #0c100f; --text: #eee9dc; --muted: #8e9690; --gold: #d7b975; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ground); color: var(--text); font-family: SourceHanSans, "Microsoft YaHei", sans-serif; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; }
+.experience { height: 100svh; min-height: 640px; display: grid; grid-template-rows: 80px minmax(0,1fr) auto; padding: 0 48px 28px; }
+.work-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.work-signature { display: flex; align-items: baseline; gap: 18px; font-size: 15px; letter-spacing: .2em; }
+.work-signature small { font-size: 9px; color: var(--muted); letter-spacing: .16em; }
+.close { display: flex; align-items: center; gap: 14px; min-height: 44px; color: var(--text); text-decoration: none; font-size: 10px; letter-spacing: .15em; }
+.close span { font: 300 32px/1 Arial,sans-serif; }
+.close:hover { color: var(--gold); }
+.art-region { display: flex; justify-content: center; align-items: center; min-height: 0; overflow: hidden; padding: 8px 0 28px; }
+.loom-frame { position: relative; width: 100%; height: 100%; max-width: 1500px; overflow: hidden; contain: layout paint; touch-action: none; cursor: crosshair; }
+#loom { display: block; width: 100%; height: 100%; }
+.loading-note { position: absolute; inset: 40% 20px auto; text-align: center; color: var(--muted); font-size: 13px; pointer-events: none; }
+.information-layer { display: grid; grid-template-columns: minmax(0,620px) minmax(300px,1fr); gap: 64px; align-items: end; padding-top: 20px; border-top: 1px solid #ffffff12; }
+.pattern-index { margin: 0 0 12px; font-size: 10px; color: var(--gold); letter-spacing: .16em; }
+.index-caption { color: var(--muted); margin-left: 22px; font-size: 9px; }
+h1 { margin: 0; font-weight: 400; font-size: clamp(19px,2vw,27px); letter-spacing: .07em; line-height: 1.5; }
+.pattern-english { color: var(--muted); font-size: 10px; letter-spacing: .09em; margin: 5px 0 12px; }
+.pattern-description { margin: 0; min-height: 76px; font-size: 12px; line-height: 1.95; color: #afb5af; letter-spacing: .045em; }
+.interaction-panel { justify-self: end; padding-bottom: 1px; font-size: 12px; }
+.gesture-instruction { margin: 0 0 18px; color: var(--text); display: flex; gap: 9px; align-items: center; }
+.gesture-instruction span { color: var(--muted); }
+.gesture-instruction i { height: 9px; width: 1px; background: #ffffff26; margin: 0 4px; }
+.camera-status { color: var(--gold); font-size: 11px; min-height: 16px; margin: 0 0 8px; max-width: 360px; line-height: 1.6; }
+.privacy-note, .keyboard-note { color: var(--muted); font-size: 10px; margin: 0; line-height: 1.8; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 9px; }
+.controls button { border: 1px solid #ffffff30; background: transparent; color: var(--text); border-radius: 3px; padding: 8px 12px; font-size: 11px; min-height: 36px; cursor: pointer; touch-action: none; }
+.controls button:hover, .controls button.is-held { background: #d7b97518; border-color: var(--gold); color: var(--gold); }
+.controls button:disabled { opacity: .4; cursor: wait; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+@media(min-width:1800px) { .experience { padding-inline: 5vw; } .information-layer { grid-template-columns: minmax(0,720px) 1fr; } .pattern-description { font-size: 14px; } }
+@media(max-width:850px) { .experience { padding: 0 24px 24px; grid-template-rows: 68px minmax(200px,1fr) auto; min-height: 720px; } .information-layer { grid-template-columns: 1fr; gap: 20px; } .interaction-panel { justify-self: start; } .art-region { padding-bottom: 22px; } .work-signature small { display: none; } .pattern-description { min-height: 100px; } .gesture-instruction { margin-bottom: 10px; } }
+@media(max-width:420px) { .experience { padding-inline: 18px; min-height: 740px; } .pattern-description { min-height: 120px; } .index-caption { letter-spacing: .03em; } }
+@media(max-height:650px) and (min-width:851px) { .experience { min-height: 580px; grid-template-rows: 56px minmax(220px,1fr) auto; padding-bottom: 18px; } .information-layer { padding-top: 12px; } }
