@@ -1,7 +1,7 @@
 <!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>Weaving browser checks</title>
 <style>body{background:#0c100f;color:#eee;font:14px sans-serif}section{display:flex;gap:12px}figure{margin:0;width:32%}canvas{width:100%;aspect-ratio:16/9}iframe{width:100%;height:900px;border:1px solid #555}pre{white-space:pre-wrap}</style>
 <h1>Weaving browser checks — no camera capture</h1><pre id="result">Starting…</pre>
-<section><figure>Released / 0<canvas id="a"></canvas></figure><figure>Half woven / .5<canvas id="b"></canvas></figure><figure>Fully woven / 1<canvas id="c"></canvas></figure></section>
+<section><figure>Bare warp / 0<canvas id="a"></canvas></figure><figure>Bottom-up weaving / .5<canvas id="b"></canvas></figure><figure>Fully woven / 1<canvas id="c"></canvas></figure></section>
 <h2>Camera denied (Permissions Policy)</h2><iframe src="../weaving.html" allow="camera 'none'; microphone 'none'" id="denied"></iframe>
 <button id="functional">Run page interaction checks</button><pre id="interaction-result"></pre>
 <script type="module">
@@ -10,12 +10,14 @@ const out=document.querySelector('#result');out.textContent='';const log=s=>out.
 const image=new Image();image.src='../public/weaving/patterns/han-jin-five-stars-brocade-pattern.jpg';await image.decode();
 try{
 const renderers=['a','b','c'].map(id=>{const r=new LoomRenderer(document.getElementById(id));r.setImage(image);r.resize(1280,720);return r;});
-renderers.forEach((r,i)=>r.draw(i/2,1));log('PASS: WebGL compiled; released / half / full drawn');
+renderers.forEach((r,i)=>r.draw(i/2,1));log('PASS: WebGL compiled; warp / bottom half / full drawn');
 const worker=new Worker('../weaving-hands-worker.mjs');let start=performance.now();
+const inferenceTimes=[];
+async function sendProbe(){const frame=await createImageBitmap(image,{resizeWidth:640,resizeHeight:480});start=performance.now();worker.postMessage({type:'frame',frame,time:performance.now()},[frame]);}
 const timeout=setTimeout(()=>{log('FAIL: worker timeout');worker.terminate();},25000);
 worker.onmessage=async({data})=>{
-if(data.type==='ready'){log('PASS: local MediaPipe WASM + model initialized in worker');const frame=await createImageBitmap(image);start=performance.now();worker.postMessage({type:'frame',frame,time:performance.now()},[frame]);}
-if(data.type==='landmarks'){log('PASS: inference completed on supplied pattern (no human hand), '+Math.round(performance.now()-start)+'ms; '+(data.points?'hand detected':'no hand'));clearTimeout(timeout);worker.terminate();}
+if(data.type==='ready'){log('PASS: local MediaPipe WASM + model initialized in worker ('+data.delegate+')');await sendProbe();}
+if(data.type==='landmarks'){inferenceTimes.push(performance.now()-start);if(inferenceTimes.length<8){await sendProbe();}else{const steady=inferenceTimes.slice(1).sort((a,b)=>a-b);log('PASS: two-hand inference, 640x480 pattern (no human hand); warm median '+Math.round(steady[3])+'ms; '+data.hands.length+' hands');clearTimeout(timeout);worker.terminate();}}
 if(data.type==='error'){log('FAIL: '+data.message);clearTimeout(timeout);worker.terminate();}
 };worker.onerror=e=>{log('FAIL worker: '+e.message);clearTimeout(timeout);};worker.postMessage({type:'init'});
 let frames=0,last=performance.now(),durations=[];
@@ -28,10 +30,14 @@ document.querySelector('#functional').onclick=async()=>{
   const f=document.querySelector('#denied'),d=f.contentDocument,w=f.contentWindow;
   const output=document.querySelector('#interaction-result');output.textContent='';
   const note=s=>output.textContent+=s+'\n',wait=ms=>new Promise(r=>setTimeout(r,ms));
-  w.dispatchEvent(new KeyboardEvent('keydown',{code:'Space'}));await wait(4200);
-  note((d.getElementById('weave-hold').classList.contains('is-held')?'PASS':'FAIL')+': Space hold activates weaving');
-  w.dispatchEvent(new KeyboardEvent('keyup',{code:'Space'}));await wait(100);
-  note((!d.getElementById('weave-hold').classList.contains('is-held')?'PASS':'FAIL')+': release clears hold');
+  const progress=()=>Number(d.getElementById('loom-frame').dataset.progress);
+  note((progress()===0?'PASS':'FAIL')+': starts with bare warp');
+  w.dispatchEvent(new KeyboardEvent('keydown',{code:'Space'}));await wait(700);
+  const woven=progress();note((Math.abs(woven-1/277)<.0001?'PASS':'FAIL')+': one keypress inserts exactly one fine weft');
+  for(let i=0;i<10;i++)w.dispatchEvent(new KeyboardEvent('keydown',{code:'Space',repeat:true}));
+  await wait(700);note((progress()===woven?'PASS':'FAIL')+': holding a key does not auto-complete');
+  w.dispatchEvent(new KeyboardEvent('keyup',{code:'Space'}));await wait(300);
+  note((progress()===woven?'PASS':'FAIL')+': stopping preserves woven progress');
   for(let n=0;n<5;n++){
     d.getElementById('pattern-next').click();await wait(700);
     const chars=d.getElementById('pattern-description').textContent.length;
@@ -39,6 +45,7 @@ document.querySelector('#functional').onclick=async()=>{
     await wait(700);
     const index=d.getElementById('pattern-index').textContent;
     note((index===String((n+1)%5+1).padStart(2,'0')?'PASS':'FAIL')+': next pattern '+index);
+    note((progress()===0?'PASS':'FAIL')+': new pattern has zero progress');
   }
   await wait(700);note((d.getElementById('pattern-description').textContent.length>0?'PASS':'FAIL')+': new typewriter advances');btn.disabled=false;
 };

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="经纬之间：捏合手指，让经线与纬线逐渐织成蜀锦；松开解构，向右挥手切换纹样。" />
+  <meta name="description" content="经纬之间：单手左右摆动，逐层织出蜀锦；双手同时捏合切换纹样。" />
   <title>经纬之间 · 锦官织境</title>
   <link rel="icon" href="./public/figma-assets/logo-mark.png" />
   <link rel="stylesheet" href="./weaving.css" />
@@ -14,9 +14,9 @@
       <div class="work-signature"><span>经纬之间</span><small>BETWEEN WARP & WEFT · 2026</small></div>
       <a class="close" href="./digital-artworks.html#weaving" aria-label="关闭作品，返回数字艺术作品">CLOSE <span aria-hidden="true">×</span></a>
     </header>
-    <section class="art-region" aria-label="经纬线动态作品，按住鼠标或空格织造，松开解构">
+    <section class="art-region" aria-label="经纬线动态作品，单手左右摆动或按住鼠标左右拖动逐层织造">
       <div class="loom-frame" id="loom-frame">
-        <canvas id="loom" aria-label="由四组经纬线交织生成的蜀锦纹样"></canvas>
+        <canvas id="loom" aria-label="从基础经线开始，由纬线自下而上逐层织成的蜀锦纹样"></canvas>
         <p class="loading-note" id="loading-note" role="status">正在准备经纬…</p>
       </div>
     </section>
@@ -29,15 +29,15 @@
         <p class="sr-only" id="pattern-accessible"></p>
       </section>
       <aside class="interaction-panel" aria-label="操作方式">
-        <p class="gesture-instruction">捏合 <span>交织</span><i></i> 松开 <span>解构</span><i></i> 右挥 <span>换纹</span></p>
+        <p class="gesture-instruction">单手左右摆 <span>织造</span><i></i> 双手捏合 <span>换纹</span></p>
         <p class="camera-status" id="camera-status" role="status">正在请求摄像头权限…</p>
         <p class="privacy-note">手势在本机识别，不上传摄像头画面</p>
         <div class="controls">
-          <button id="weave-hold" type="button">按住织造</button>
+          <button id="weave-hold" type="button">织入一梭</button>
           <button id="pattern-next" type="button" aria-label="切换下一张蜀锦纹样">下一纹样 →</button>
           <button id="camera-toggle" type="button">关闭摄像头</button>
         </div>
-        <p class="keyboard-note">也可按住空格织造 · → 切换 · Esc 返回</p>
+        <p class="keyboard-note">左右拖动或逐次按空格织造 · → 换纹 · Esc 返回</p>
       </aside>
     </footer>
   </main>
