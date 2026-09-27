@@ -67,7 +67,7 @@ stage.addEventListener('keydown',e=>{if(!camera||!current)return;const keys=['Ar
 const resize=new ResizeObserver(()=>{if(!renderer)return;const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/Math.max(1,h);camera.updateProjectionMatrix();fit();});
 try{
  renderer=new THREE.WebGLRenderer({canvas:$('flower-canvas'),alpha:true,antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.95;
- scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(35,1,.01,100);controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.07;controls.enablePan=false;controls.autoRotateSpeed=.38;
+ scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(35,1,.01,100);controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.07;controls.enablePan=false;controls.autoRotateSpeed=.46;
  controls.addEventListener('start',()=>{dragging=true;});controls.addEventListener('end',()=>{dragging=false;resumeAt=performance.now()+3500;});
  const room=new RoomEnvironment(),pmrem=new THREE.PMREMGenerator(renderer);environment=pmrem.fromScene(room,.04);scene.environment=environment.texture;room.dispose();pmrem.dispose();
  scene.add(new THREE.HemisphereLight(0xf3eaff,0x60504a,1.8));const key=new THREE.DirectionalLight(0xffead1,2.7);key.position.set(3,5,5);scene.add(key);const rim=new THREE.DirectionalLight(0xbacfff,1.8);rim.position.set(-4,2,-3);scene.add(rim);
