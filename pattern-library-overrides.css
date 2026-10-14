@@ -1,4 +1,6 @@
 /* Final interaction and icon refinements. */
+.library-hero { background: var(--paper, #fffdf1); color: var(--ink, #1e1e20); }
+.library-hero p { color: #343436; }
 .library-pagination button:last-child::after { display: none; }
 
 .library-pagination button:last-child img {

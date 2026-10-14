@@ -1,4 +1,10 @@
 (() => {
+  // Keep each revealed tool colored for this page load only.
+  document.querySelectorAll('.machine-lineart').forEach((image) => {
+    const reveal = () => image.classList.add('is-colored');
+    image.addEventListener('pointerenter', reveal, { once: true });
+    image.addEventListener('focus', reveal, { once: true });
+  });
   const weaving = document.querySelector('.weaving');
   const machineList = document.querySelector('.machine-list');
   const processSummary = document.querySelector('.process-summary');

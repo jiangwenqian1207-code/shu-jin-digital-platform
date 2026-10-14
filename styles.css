@@ -159,6 +159,11 @@ a{text-decoration:none}
 .reeling-card>img{left:788px;top:80px;width:344.33px;height:386.33px}
 .rewinding-card>img{left:105px;top:16px;width:360.33px;height:423.67px}
 .winding-card>img{left:694px;top:56px;width:399px;height:374px}
+/* Both layers inherit the exact same desktop and mobile image geometry. */
+.machine-card>.machine-colored{pointer-events:none;clip-path:inset(0 100% 0 0);transition:clip-path .7s cubic-bezier(.4,0,.2,1)}
+.machine-lineart.is-colored+.machine-colored{clip-path:inset(0 0 0 0)}
+.machine-lineart:focus-visible{outline:2px solid var(--yellow);outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.machine-card>.machine-colored{transition:none}}
 .machine-copy{position:absolute;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:32px}
 .loom-card .machine-copy{left:714px;top:108px;width:438px}.reeling-card .machine-copy{left:80px;top:121px;width:577px}.rewinding-card .machine-copy{left:715px;top:108px;width:436px}.winding-card .machine-copy{left:80px;top:162px;width:577px}
 .machine-copy h3{display:inline-flex;margin:0;background:var(--yellow);color:var(--deep-blue);padding:8px 24px;border-radius:4px;font-family:SourceHanSerif,serif;font-size:20px;line-height:27px;letter-spacing:1px;font-weight:700;white-space:nowrap}

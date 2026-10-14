@@ -9,7 +9,7 @@
 .artworks-filters a:hover, .artworks-filters a:focus-visible { background: var(--yellow); border-color: var(--yellow); color: #202020; }
 .artworks-gallery { position: relative; display: flex; flex-direction: column; gap: 64px; margin-top: 44px; padding-top: 20px; padding-bottom: 20px; }
 .artworks-guides { position: absolute; inset: 0; pointer-events: none; }
-.artworks-guides i { position: absolute; top: 0; bottom: 0; border-left: 1px dashed rgba(98,99,102,.18); }
+.artworks-guides i { position: absolute; top: 0; bottom: 0; border-left: 1px dashed rgba(98,99,102,.207); }
 .artworks-guides i.solid { border-left-style: solid; }
 .artwork { position: relative; width: 66%; scroll-margin-top: 24px; }
 .artwork-weaving { width: 100%; }
@@ -27,6 +27,10 @@
 .artwork-flora .artwork-media img { object-fit: contain; }
 .artwork-flora .artwork-media { background: #141414; }
 .artwork-flora .artwork-media video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center center; }
+.artwork-particles .artwork-media { background: #000; }
+.artwork-particles .artwork-media video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center center; }
+.artwork-sound .artwork-media { background: #000; }
+.artwork-sound .artwork-media video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center center; }
 .artwork-copy { margin-top: 20px; }
 .artwork-weaving .artwork-copy { max-width: 792px; }
 .artwork h2 { margin: 0; font-size: 32px; line-height: 46px; font-weight: 400; }
