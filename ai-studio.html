@@ -2,6 +2,7 @@
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="锦官织境 AI 纹样创作空间，探索构图、配色与蜀锦纹样创作。"><title>AI纹样创作空间｜锦官织境</title>
 <link rel="icon" href="./public/figma-assets/logo-mark.png">
 <link rel="stylesheet" href="./pattern-library.css"><link rel="stylesheet" href="./pattern-library-overrides.css"><link rel="stylesheet" href="./login-modal.css"><link rel="stylesheet" href="./login-modal-overrides.css"><link rel="stylesheet" href="./site-chrome.css"><link rel="stylesheet" href="./ai-studio.css">
+<script type="importmap">{"imports":{"three":"./public/vendor/three/build/three.module.js","three/addons/":"./public/vendor/three/addons/"}}</script>
 </head><body class="studio-page">
     <header class="library-header site-header">
       <div class="design-canvas">
@@ -14,6 +15,7 @@
     </header>
 <main class="studio-main">
   <section class="studio-hero"><div class="library-container"><h1>AI纹样创作空间</h1><p>你可以在这里通过 AI 创作出属于你的个性化蜀锦纹样</p></div></section>
+  <div class="studio-workspace-background">
   <section class="studio-workspace" aria-label="纹样创作工作台">
     <nav class="studio-steps" aria-label="创作步骤"><button class="selected" data-step="create" aria-pressed="true">创作</button><button data-step="edit" aria-pressed="false">编辑</button><button data-step="export" aria-pressed="false">导出</button></nav>
     <nav class="studio-views" aria-label="纹样查看方式"><button data-view="single" aria-pressed="true"><img src="./public/icons/icon-pattern-single.svg" alt="">单元纹样</button><button data-view="repeat" aria-pressed="false"><img src="./public/icons/icon-pattern-repeat.svg" alt="">连续铺平</button><button data-view="product" aria-pressed="false"><img src="./public/icons/icon-3d-preview.svg" alt="">应用预览</button></nav>
@@ -28,7 +30,7 @@
         <section><h2>色彩体系</h2><div class="palette-card">
           <div class="palette-tabs" aria-label="配色来源"><button type="button" class="selected" data-palette-tab="classic" aria-pressed="true">经典</button><button type="button" data-palette-tab="custom" aria-pressed="false">自定义</button><button type="button" data-palette-tab="history" aria-pressed="false">历史</button></div>
           <div id="palette-options" class="palette-options" aria-label="经典配色"></div>
-          <div id="custom-colors" hidden><p>选择你的五色搭配</p><div class="color-inputs"></div></div>
+          <div id="custom-colors" hidden><div class="custom-color-heading"><span id="custom-color-title">选择你的五色搭配</span><button type="button" class="quiet" id="all-custom-colors">查看全部</button></div><div id="custom-color-picker"><div class="custom-color-grid" aria-label="蜀锦色彩"></div><button type="button" class="custom-confirm" disabled>确定（0/5）</button></div><div id="custom-selection" hidden aria-label="已确认的五色搭配"><div class="chosen-color-row"></div><button type="button" id="custom-reset">重置</button></div></div>
           <div id="palette-history" hidden><p>本次选择的配色会显示在这里。</p></div>
           <button type="button" class="quiet palette-more" id="all-palettes">查看全部</button>
         </div></section>
@@ -45,9 +47,17 @@
         </div><h2>文本生成纹样</h2><p>描述你需要的纹样，即可在几秒钟内获得。</p>
       </div>
       <div class="repeat-state" id="repeat-view" hidden><div class="repeat-controls" aria-label="连续方式"><button class="selected" data-repeat="four" aria-pressed="true">四方连续</button><button data-repeat="two" aria-pressed="false">二方连续</button></div><div class="repeat-sample"></div><h2>连续铺平</h2><p>本地紫藤纹样示例 · 非 AI 生成结果</p></div>
-      <div class="product-state" id="product-view" hidden><img src="./public/icons/icon-3d-preview.svg" alt=""><h2>应用预览</h2><p>将纹样应用到 3D 抱枕，查看产品效果。</p><p class="muted">3D 模型与贴图功能尚未接入。</p></div>
+      <section class="product-state" id="product-view" aria-label="3D 产品应用预览" hidden>
+        <div class="product-toolbar"><div><span class="product-kicker">纹样 × 产品</span><h2><span class="product-name">抱枕</span>应用预览</h2></div><button id="product-reset" type="button">复位视角</button></div>
+        <div class="product-options" aria-label="选择产品"></div>
+        <div class="product-viewport"><span class="product-model-note">3D / 简化模型</span><div class="product-view-tools"><span>拖动旋转 · 滚轮缩放 · 右键平移</span><button id="product-rotate" type="button" aria-pressed="false">自动旋转</button></div></div>
+        <div class="product-texture-tools"><label>纹样平铺 <input id="texture-repeat" type="range" min="0.5" max="4" step="0.1" value="1"><output id="repeat-value">1.0×</output></label><label>纹样方向 <select id="texture-angle"><option value="0">0°</option><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select></label><label class="product-upload">上传纹样<input id="product-pattern" type="file" accept="image/png,image/jpeg,image/webp"></label><button id="product-sample" type="button">示例纹样</button></div>
+        <div class="product-texture-tools"><label>水平位置 <input id="texture-x" type="range" min="-1" max="1" step="0.01" value="0"></label><label>垂直位置 <input id="texture-y" type="range" min="-1" max="1" step="0.01" value="0"></label></div>
+        <p class="product-status" role="status">选择产品，查看纹样应用效果</p>
+      </section>
     </div>
   </section>
+  </div>
 </main>
 <dialog class="studio-dialog" id="options-dialog"><div class="dialog-heading"><h2 id="options-title">构图方式</h2><button aria-label="关闭" id="close-options">×</button></div><div id="options-content"></div></dialog>
 <div id="studio-notice" role="status" hidden></div>
@@ -89,5 +99,5 @@
     </div>
     
     
-<script src="./login-modal.js"></script><script src="./ai-studio.js"></script>
+<script src="./login-modal.js"></script><script src="./studio-colors.js"></script><script src="./studio-color-panel.js"></script><script src="./ai-studio.js"></script><script type="module" src="./studio-preview.mjs"></script>
 </body></html>

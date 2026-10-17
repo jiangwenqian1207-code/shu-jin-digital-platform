@@ -42,12 +42,6 @@
     });
   }
   renderPalettes($('#palette-options'));
-  palettes[0].forEach((color, index) => {
-    const input = document.createElement('input');
-    input.type = 'color'; input.value = color;
-    input.setAttribute('aria-label', '自定义颜色 ' + (index + 1));
-    $('.color-inputs').append(input);
-  });
   function selectComposition(value) {
     document.querySelectorAll('[data-composition]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.composition === value)));
   }
