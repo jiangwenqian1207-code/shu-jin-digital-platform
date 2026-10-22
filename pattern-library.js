@@ -122,7 +122,10 @@
   const updateNavigation = () => {
     const pages = Math.ceil(filteredPatterns.length / pageSize);
     pagination.innerHTML = Array.from({length:pages}, (_,i) => `<button type="button" data-page="${i+1}" class="${currentPage===i+1?'active':''}" ${currentPage===i+1?'aria-current="page"':''}>${i+1}</button>`).join('') + (pages ? `<button type="button" data-page="${currentPage+1}" aria-label="下一页" ${currentPage>=pages?'disabled':''}><img src="./public/icons/Polygon 10.svg" alt=""></button>` : '');
-    more.hidden = visibleEnd >= filteredPatterns.length;
+    const expanded = visibleEnd > currentPage * pageSize;
+    more.hidden = !expanded && visibleEnd >= filteredPatterns.length;
+    more.textContent = expanded ? '收起' : '显示更多';
+    more.setAttribute('aria-expanded', String(expanded));
   };
   const draw = (options = {}) => {
     if (!options.preservePage) { currentPage = 1; visibleEnd = pageSize; }
@@ -144,10 +147,12 @@
   more.addEventListener('click', () => {
     const previousCards = [...grid.children];
     const previousCount = previousCards.length;
-    visibleEnd += pageSize;
+    const collapsing = visibleEnd > currentPage * pageSize;
+    visibleEnd = collapsing ? currentPage * pageSize : filteredPatterns.length;
     draw({preservePage:true});
     // Retain existing cards and their interaction state when appending.
     [...grid.children].slice(0,previousCount).forEach((card,i) => card.replaceWith(previousCards[i]));
+    if (collapsing) more.scrollIntoView({block:'nearest',behavior:'smooth'});
   });
   pagination.addEventListener('click', event => {
     const button = event.target.closest('[data-page]');
@@ -196,6 +201,11 @@
     const download = event.target.closest('.pattern-download');
     if (download) {
       const card = download.closest('.pattern-card');
+      if (window.matchMedia('(max-width:767px)').matches) {
+        const detailLink = card.querySelector('.pattern-detail-link');
+        if (detailLink) window.location.href = detailLink.href + '#resources';
+        return;
+      }
       const menu = card?.querySelector('.pattern-download-menu');
       const isOpen = download.getAttribute('aria-expanded') === 'true';
       closeDownloadMenus();

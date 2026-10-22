@@ -70,11 +70,16 @@
     });
     ['create','edit','export'].forEach(id => { $('#' + id + '-panel').hidden = id !== step; });
   }
-  document.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => setStep(b.dataset.step)));
+  document.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => {
+    setStep(b.dataset.step);
+    document.dispatchEvent(new Event('studio:mode-change'));
+  }));
   document.querySelectorAll('[data-back-create]').forEach(b => b.addEventListener('click', () => setStep('create')));
   document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => {
     document.querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
     ['single','repeat','product'].forEach(id => { $('#' + id + '-view').hidden = id !== button.dataset.view; });
+    if (button.dataset.view === 'product') setStep('edit');
+    document.dispatchEvent(new Event('studio:mode-change'));
   }));
   document.querySelectorAll('[data-repeat]').forEach(button => button.addEventListener('click', () => {
     document.querySelectorAll('[data-repeat]').forEach(b => {

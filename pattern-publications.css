@@ -1,0 +1,26 @@
+.publication-dialog{box-sizing:border-box;width:min(740px,calc(100vw - 32px));max-height:90vh;overflow:auto;padding:28px;border:1px solid #dcd8cc;border-radius:10px;background:#fcfbf4;color:#383835;font-family:inherit}
+.publication-dialog::backdrop{background:#0007}
+.publication-dialog{padding:0;overflow:hidden}
+.publication-dialog[open]{display:flex;flex-direction:column}
+.publication-dialog>header{flex-shrink:0;padding:20px 28px;border-bottom:1px solid #e0dcd1;background:#fcfbf4}
+.publication-scroll-body{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 28px 28px;scrollbar-gutter:stable}
+.publication-dialog>header button{flex-shrink:0;width:44px;height:44px;display:grid;place-items:center}
+.publication-dialog [hidden]{display:none!important}
+.publication-dialog header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.publication-dialog h2{font-size:24px;margin:8px 0}.publication-dialog small{font-size:12px;letter-spacing:2px;color:#9c8050}
+.publication-dialog button,.publication-dialog a{font:inherit;font-size:14px;cursor:pointer}
+.publication-dialog header button{font-size:30px;border:0;background:transparent}
+.publication-note,.publication-dialog p{font-size:13px;line-height:1.8;overflow-wrap:anywhere}
+.publication-note{color:#817b70;background:#f1ede3;padding:12px;border-radius:4px}
+.publication-overview{display:flex;gap:18px;align-items:center;margin:20px 0}.publication-overview img{width:120px;height:120px;object-fit:contain;background:#eeeae0;border:1px solid #e1ddd3;border-radius:6px}
+.publication-overview b{font-size:15px}.publication-overview p{margin:6px 0;color:#817b70}
+.publication-dialog fieldset{border:0;border-top:1px solid #e0dcd1;padding:20px 0;margin:8px 0}.publication-dialog legend{font-size:16px;padding:0 12px 0 0}
+.publication-dialog label{display:flex;flex-direction:column;gap:8px;font-size:14px;margin-bottom:16px}
+.publication-dialog input:not([type=checkbox]),.publication-dialog textarea,.publication-dialog select{box-sizing:border-box;max-width:100%;width:100%;padding:10px 12px;min-height:42px;border:1px solid #dcd8ce;border-radius:5px;background:#fffef9;color:#383835;font:inherit;font-size:14px}
+.publication-dialog input[readonly]{background:#eeeae0;color:#777}.publication-dialog textarea{resize:vertical}
+.publication-dialog .publication-confirm,.publication-checks label{flex-direction:row;align-items:flex-start;line-height:1.7;gap:10px}.publication-dialog input[type=checkbox]{accent-color:#b98222;flex-shrink:0;margin-top:5px;width:16px;height:16px}
+.publication-checks{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px}.publication-summary{border:1px solid #decaa3;padding:16px;background:#fff8e7;margin-bottom:20px}.publication-summary h3{font-size:16px;margin:0}
+.publication-dialog footer{display:flex;gap:12px;justify-content:flex-end}.publication-dialog footer button{padding:12px 20px;border:1px solid #d8d4ca;border-radius:5px;background:transparent}.publication-dialog .publication-primary{background:#222;color:#eeac35;border-color:#222}.publication-dialog button:disabled{opacity:.5;cursor:wait}
+.publication-dialog :focus-visible{outline:2px solid #eeac35;outline-offset:2px}#publication-feedback{color:#a43d2c}#publication-success a{display:inline-block;margin:20px 0;color:#925f13}
+.local-publications{max-width:1440px;margin:48px auto 80px;padding:24px;scroll-margin-top:80px}.local-publications>p{font-size:14px;color:#817b70;line-height:1.8}.local-publication-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}.local-publication-grid article{padding:14px;border:1px solid #dedace;border-radius:6px;background:#f5f2e9;min-width:0}.local-publication-grid img{width:100%;aspect-ratio:1;object-fit:contain}.local-publication-grid h3{font-size:16px;overflow-wrap:anywhere}.local-publication-grid p{font-size:13px;line-height:1.8;overflow-wrap:anywhere}.local-publication-grid summary{font-size:14px;cursor:pointer}
+@media(max-width:767px){.publication-dialog{padding:0;max-height:88vh}.publication-dialog>header{padding:14px 18px;gap:8px}.publication-scroll-body{padding:0 18px 18px}.publication-dialog h2{font-size:20px}.publication-overview img{width:88px;height:88px}.publication-checks{grid-template-columns:1fr}.publication-dialog footer button{padding:10px 12px}.local-publications{padding:16px}.local-publication-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.local-publication-grid article{padding:8px}.local-publication-grid h3,.local-publication-grid summary,.local-publication-grid p{font-size:12px}}

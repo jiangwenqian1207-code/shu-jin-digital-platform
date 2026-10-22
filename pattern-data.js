@@ -16,7 +16,7 @@
     ['唐 联珠对鹊锦纹','./public/digital-pattern-library/tang-dynasty-pearl-roundel-paired-magpie-brocade-pattern.jpg','免费','[1.7K]','0'],
     ['北朝 方格兽锦纹','./public/digital-pattern-library/northern-dynasties-grid-beast-brocade-pattern.jpg','免费','[1.9K]','0']
   ];
-  // New local artwork: prices and view counts are not yet assigned.
+  // Fixed RMB prices for newly added artwork; no fabricated view counts.
   const additions = [
     ['宫灯流苏纹·二','ai-palace-lantern-tassel-pattern (2).png','器物纹','灯笼锦式','绿'],
     ['熊猫卷草纹','ai-Panda & Scroll Motif.png','动物纹','散点式','蓝'],
@@ -29,7 +29,8 @@
     ['花鸟马赛克·一','mosaic-floral-bird-01.png','动物纹','方格式','蓝'],
     ['花鸟马赛克·二','mosaic-floral-bird-02.png','动物纹','方格式','绿']
   ];
-  additions.forEach(([name,file]) => patterns.push([name,'./public/ai-pattern-generation/'+encodeURIComponent(file),'AI','新上架','待定']));
+  const additionPrices = ['3.8','6.6','2.9','4.5','5.2','3.6','2.8','4.2','7.5','8.8'];
+  additions.forEach(([name,file],i) => patterns.push([name,'./public/ai-pattern-generation/'+encodeURIComponent(file),'AI','新上架',additionPrices[i]]));
 
   // Curated against the local artwork images. Subjects are inclusive;
   // color describes the dominant palette, not every small accent.

@@ -1,0 +1,27 @@
+/* Figma 2393:2457 / 2487 / 3052: adjoining 894px tiles at 5% opacity.
+   At 1200px panel width the two tiles start at -294px and 600px.
+   Repeat keeps the decoration continuous as the existing blue panels expand. */
+.machine-card.blue::after,.tools-viewport::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  left:50%;
+  top:0;
+  width:var(--tools-bg-width);
+  height:100%;
+  transform:translateX(-50%);
+  background-image:url('./public/digital-pattern-library/han-jin-five-stars-brocade-pattern.jpg');
+  background-size:894px 894px;
+  background-repeat:repeat;
+  background-position:calc(50% + 447px) 0;
+  opacity:.05;
+  pointer-events:none;
+  will-change:width;
+}
+.loom-card.blue::after{background-position-y:-23px}
+.tools-viewport::after{top:18px;height:480px;background-position-y:-290px}
+@media(max-width:767px){
+  .machine-card.blue::after,.tools-viewport::after{left:0;width:100%;transform:none;background-size:447px 447px;background-position-x:calc(50% + 223.5px)}
+  .loom-card.blue::after{background-position-y:-11.5px}
+  .tools-viewport::after{top:0;height:250px;background-position-y:-145px}
+}

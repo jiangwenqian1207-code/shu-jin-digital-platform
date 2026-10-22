@@ -4,7 +4,7 @@ import {products,productConfigs,loadProduct,disposeProduct} from './studio-produ
 
 const root=document.querySelector('#product-view');
 const host=root.querySelector('.product-viewport');
-const status=root.querySelector('[role=status]');
+const status=document.querySelector('#edit-panel .product-status');
 let renderer,scene,camera,controls,model,material,texture,active=false,frame=0,request=0;
 let product='pillow';
 let modelRequest=0;
@@ -54,11 +54,11 @@ async function setPattern(url){
 }
 function updateTexture(){
   if(!texture)return;
-  const repeat=Number(root.querySelector('#texture-repeat').value);
+  const repeat=Number(document.querySelector('#texture-repeat').value);
   texture.repeat.set(repeat,repeat);texture.center.set(.5,.5);
-  texture.rotation=THREE.MathUtils.degToRad(Number(root.querySelector('#texture-angle').value));
-  texture.offset.set(Number(root.querySelector('#texture-x').value),Number(root.querySelector('#texture-y').value));
-  root.querySelector('#repeat-value').textContent=repeat.toFixed(1)+'×';
+  texture.rotation=THREE.MathUtils.degToRad(Number(document.querySelector('#texture-angle').value));
+  texture.offset.set(Number(document.querySelector('#texture-x').value),Number(document.querySelector('#texture-y').value));
+  document.querySelector('#repeat-value').textContent=repeat.toFixed(1)+'×';
 }
 function init(){
   renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
@@ -80,19 +80,18 @@ function init(){
 for(const [id,name] of products){
   const button=document.createElement('button');button.type='button';button.dataset.product=id;button.textContent=name;button.setAttribute('aria-pressed',String(id===product));button.addEventListener('click',()=>select(id));root.querySelector('.product-options').append(button);
 }
-root.querySelector('#texture-repeat').addEventListener('input',updateTexture);
-root.querySelector('#texture-angle').addEventListener('input',updateTexture);
-root.querySelector('#texture-x').addEventListener('input',updateTexture);
-root.querySelector('#texture-y').addEventListener('input',updateTexture);
-root.querySelector('#product-reset').addEventListener('click',()=>renderer&&reset());
+document.querySelector('#texture-repeat').addEventListener('input',updateTexture);
+document.querySelector('#texture-angle').addEventListener('input',updateTexture);
+document.querySelector('#texture-x').addEventListener('input',updateTexture);
+document.querySelector('#texture-y').addEventListener('input',updateTexture);
 root.querySelector('#product-rotate').addEventListener('click',e=>{if(!controls)return;controls.autoRotate=!controls.autoRotate;controls.autoRotateSpeed=.6;e.currentTarget.setAttribute('aria-pressed',String(controls.autoRotate));});
-root.querySelector('#product-pattern').addEventListener('change',async e=>{
+document.querySelector('#product-pattern').addEventListener('change',async e=>{
   const file=e.target.files[0];if(!file)return;
   if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>15*1024*1024){say('请选择不超过 15 MB 的 PNG、JPEG 或 WebP 图片。');return;}
   const url=URL.createObjectURL(file);await setPattern(url);URL.revokeObjectURL(url);e.target.value='';
 });
-root.querySelector('#product-sample').addEventListener('click',()=>setPattern(sample));
 // Future generator integration: dispatch a local URL/blob URL in detail.url.
 document.addEventListener('studio:pattern-ready',e=>{if(e.detail?.url){if(!renderer)init();setPattern(e.detail.url);}});
+document.addEventListener('studio:apply-pattern',e=>{if(e.detail?.url){if(!renderer)init();setPattern(e.detail.url);}});
 new MutationObserver(setActive).observe(root,{attributes:true,attributeFilter:['hidden']});
 document.addEventListener('visibilitychange',setActive);

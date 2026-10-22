@@ -1,0 +1,43 @@
+.mobile-site-bar,.mobile-site-drawer{display:none}
+@media(max-width:767px){
+  html{scroll-padding-top:72px}
+  body{padding-top:56px}
+  body .site-header{display:none!important}
+  .mobile-site-bar{display:flex;position:fixed;inset:0 0 auto;height:56px;z-index:1000;background:#000;align-items:center;justify-content:space-between;padding:0 16px;color:white}
+  .mobile-site-bar>a{display:flex;align-items:center;gap:5px}.mobile-site-bar img{display:block}.mobile-site-bar .mobile-mark{width:28px;height:28px}.mobile-site-bar .mobile-wordmark{width:92px;height:auto}
+  .mobile-site-toggle{display:flex;width:44px;height:44px;flex-direction:column;justify-content:center;align-items:center;gap:5px;border:0;background:none;padding:8px}.mobile-site-toggle i{display:block;width:24px;height:2px;background:white}
+  dialog.mobile-site-drawer[open]{display:flex;flex-direction:column;position:fixed;inset:0 0 0 auto;margin:0;width:min(84vw,340px);height:100dvh;max-height:100%;max-width:100%;padding:24px;background:#202020;color:#fff;border:0;border-radius:0;font-family:inherit;animation:mobile-slide-in .25s ease-out}
+  .mobile-site-drawer::backdrop{background:#0009}.mobile-site-drawer .mobile-drawer-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ffffff24;padding-bottom:22px;font-size:20px}
+  .mobile-site-drawer .mobile-drawer-close{border:0;background:none;color:white;width:44px;height:44px;font-size:28px;padding:0;float:none}
+  .mobile-site-drawer nav{display:flex;flex-direction:column;margin-top:20px;gap:4px}.mobile-site-drawer nav a{color:white;text-decoration:none;padding:18px 0;font-size:18px;border-bottom:1px solid #ffffff15}.mobile-site-drawer nav a[aria-current=page]{color:#eeac35}.mobile-site-drawer p{margin-top:auto;color:#aaa;font-size:12px;line-height:1.8}
+  body.mobile-site-open{overflow:hidden}
+  .pattern-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 8px}
+  .pattern-grid .pattern-card{height:auto;min-height:0;padding:6px;border-radius:6px;overflow:visible}
+  .pattern-grid .pattern-meta{height:auto;min-height:24px;gap:3px;flex-wrap:wrap}.pattern-grid .pattern-tag,.pattern-grid .pattern-tag.ai{font-size:12px;padding:2px 5px;line-height:16px;letter-spacing:0}
+  .pattern-grid .pattern-views{font-size:12px;gap:3px;letter-spacing:0;flex-wrap:wrap}.pattern-grid .pattern-favorite{width:24px;height:26px;display:flex;align-items:center;justify-content:center}.pattern-grid .pattern-favorite img{width:15px;height:15px}
+  .pattern-grid .pattern-card img.pattern-image,.pattern-grid .pattern-card:hover img.pattern-image,.pattern-grid .pattern-card:focus-within img.pattern-image{height:auto;aspect-ratio:1;object-fit:cover;margin-top:6px}
+  .pattern-grid .pattern-info{margin:8px 0 0;display:flex;align-items:flex-start;flex-direction:column;gap:6px}
+  .pattern-grid .pattern-info strong{font-size:12px;line-height:18px;white-space:normal;overflow-wrap:anywhere;font-weight:500;min-height:36px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .pattern-grid .pattern-price{font-size:12px;line-height:18px;padding:1px 6px;border-radius:12px}
+  .pattern-grid .pattern-download-wrap{display:block;width:100%;margin:10px 0 0}
+  .pattern-grid .pattern-card .pattern-download{display:block;width:100%;height:36px;margin:0;padding:0;border-radius:4px;font-size:12px;letter-spacing:2px;opacity:1}
+  .library-search label{min-width:0;flex:1}.library-search input{min-width:0;width:100%}.library-search-submit{flex-shrink:0}.library-category{white-space:nowrap}
+  .pattern-empty{grid-column:1/-1}
+  @keyframes mobile-slide-in{from{transform:translateX(100%)}to{transform:translateX(0)}}
+}
+@media(prefers-reduced-motion:reduce){dialog.mobile-site-drawer[open]{animation:none}}
+
+/* Let mobile copy determine section height instead of overlapping fixed-position rails. */
+@media(max-width:767px){
+  .patterns{height:auto;padding-bottom:80px}
+  .patterns>.design-canvas,.colors>.design-canvas{height:auto;display:flow-root}
+  .patterns .pattern-heading,.colors .color-heading{position:relative;left:auto;top:auto;transform:none;width:calc(100% - 40px);height:auto;margin:48px auto 0;display:flow-root;text-align:left}
+  .patterns .pattern-heading p,.colors .color-heading p{font-size:14px;line-height:24px;white-space:normal;text-align:left}
+  .patterns .pattern-heading h2,.colors .color-heading h2{text-align:center}
+  .pattern-heading p br,.color-heading p br{display:none}
+  .patterns .pattern-rail{position:relative;left:auto;top:auto;transform:none;width:100%;margin-top:32px}
+  .patterns .compositions{margin-top:12px}
+  .patterns .pattern-button{position:relative;left:auto;top:auto;transform:none;margin:40px auto 0}
+  .colors .color-swatches{position:relative;left:auto;top:auto;transform:none;margin:32px auto 0;width:calc(100% - 40px)}
+  .colors .color-note{position:relative;left:auto;top:auto;transform:none;margin:32px auto 0;width:calc(100% - 40px);text-align:left;font-size:14px;line-height:24px}
+}

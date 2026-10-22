@@ -82,6 +82,7 @@
       account.hidden = isLoggedIn;
     });
     sessionStorage.setItem('shu-jin-demo-logged-in', String(isLoggedIn));
+    document.dispatchEvent(new CustomEvent('studio:auth-change', { detail: { loggedIn: isLoggedIn } }));
   };
   profileSwitchers.forEach(({ menu }) => menu.querySelector('.profile-logout')?.addEventListener('click', () => {
     setLoggedIn(false);
