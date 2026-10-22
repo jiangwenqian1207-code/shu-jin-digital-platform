@@ -120,7 +120,8 @@ a{text-decoration:none}
 .timeline-arrow.left:not([aria-disabled="true"]):is(:hover,:focus-visible) img{transform:scaleX(-1) scale(.73)}
 .timeline-arrow[aria-disabled="true"]{cursor:default;opacity:.55}
 .era-track{position:absolute;left:calc(50% - 533.68px);top:763.44px;width:1067.36px;height:81px;color:var(--red)}
-.era-labels{height:32px;display:flex;align-items:center;justify-content:center;gap:96px;font-size:16px;line-height:32px}
+.era-labels{height:32px;display:flex;align-items:center;justify-content:space-between;gap:0;font-size:16px;line-height:32px}
+.era-labels>span,.era-labels>b{width:120px;flex:0 0 120px;text-align:center!important}
 .era-labels span,.era-labels b{text-align:left;font-weight:400;white-space:nowrap;opacity:.6;transition:font-weight .2s ease,opacity .25s ease}.era-labels .active{font-weight:700;opacity:1}
 .track-line{position:relative;margin-top:9px;height:40px}
 .track-line::before{content:"";position:absolute;left:3.356px;top:18.56px;width:1065px;height:2.001px;background:url('./public/figma-assets/icons/timeline-dash.svg') center/100% 100% no-repeat}
@@ -491,7 +492,7 @@ a{text-decoration:none}
   .timeline-copy small{margin-top:16px;font-size:13px;line-height:20px;letter-spacing:.3px}
   .timeline-arrow{display:none}
   .era-track{--era-label-x:0px;--era-slider-x:24px;left:20px;top:850px;width:calc(100% - 40px);height:92px;overflow:hidden;touch-action:pan-y}
-  .era-labels{width:768px;height:30px;justify-content:flex-start;gap:0;padding:0;font-size:14px;line-height:30px;transform:translate3d(var(--era-label-x),0,0);transition:transform .34s cubic-bezier(.22,1,.36,1);will-change:transform}
+  .era-labels{width:max-content;height:30px;justify-content:flex-start;gap:0;padding:0;font-size:14px;line-height:30px;transform:translate3d(var(--era-label-x),0,0);transition:transform .34s cubic-bezier(.22,1,.36,1);will-change:transform}
   .era-track.dragging .era-labels{transition:none}
   .era-labels span,.era-labels b{width:96px;flex:0 0 96px;text-align:center;font-weight:400;opacity:.55;transition:font-weight .2s ease,opacity .25s ease}
   .era-labels .active{font-weight:700;opacity:1}

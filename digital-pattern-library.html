@@ -34,7 +34,7 @@
           <div class="library-filter-row"><div class="library-filters"><button type="button" data-filter="subject"><span>纹样题材</span><b aria-hidden="true"></b></button><button type="button" data-filter="composition"><span>构图形式</span><b aria-hidden="true"></b></button><button type="button" data-filter="era"><span>来源朝代</span><b aria-hidden="true"></b></button><button type="button" data-filter="color"><span>色彩属性</span><b aria-hidden="true"></b></button></div><div class="library-price"><button class="active" type="button" data-price="all">所有</button><button type="button" data-price="paid">付费</button><button type="button" data-price="free">免费</button></div></div>
           <div class="library-divider"></div>
           <div id="pattern-grid" class="pattern-grid"></div>
-          <nav class="library-pagination" aria-label="分页"><button class="active" type="button">1</button><button type="button">2</button><button type="button" aria-label="下一页"><img src="./public/icons/Polygon 10.svg" alt="" /></button></nav>
+          <div class="library-browse-controls"><button id="pattern-show-more" type="button" aria-controls="pattern-grid">显示更多</button><nav class="library-pagination" aria-label="分页"></nav></div>
         </div>
       </section>
     </main>
@@ -75,6 +75,7 @@
         <p class="login-register">已有账号？<button type="button" data-show-login>登录</button></p>
       </div>
     </div>
+    <script src="./pattern-data.js"></script>
     <script src="./pattern-library.js"></script>
     <script src="./login-modal.js"></script>
   </body>

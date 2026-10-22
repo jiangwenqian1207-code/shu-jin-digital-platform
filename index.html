@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./login-modal.css" />
     <link rel="stylesheet" href="./login-modal-overrides.css" />
     <link rel="stylesheet" href="./site-chrome.css" />
+    <link rel="stylesheet" href="./home-colors.css" />
   </head>
   <body>
     <div id="root">
@@ -106,7 +107,7 @@
           </div>
           <button class="timeline-arrow right" type="button" aria-label="下一时期"><img src="./public/figma-assets/icons/timeline-right-frame.svg" alt="" /></button>
           <div class="era-track">
-            <div class="era-labels"><b class="active">春秋战国</b><span>秦汉</span><span>魏晋南北朝</span><span>隋唐</span><span>宋元</span><span>明清</span><span>近代</span><span>现代</span></div>
+            <div class="era-labels"><b class="active">春秋战国</b><span>秦汉</span><span>魏晋南北朝</span><span>隋唐</span><span>宋元</span><span>明代</span><span>清代</span><span>现代</span></div>
             <div class="track-line"><i></i><i></i><button type="button" role="slider" aria-label="朝代时间轴" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" aria-valuetext="春秋战国"><img src="./public/figma-assets/icons/era-left.svg" alt="" /><img class="era-next" src="./public/figma-assets/icons/era-right.svg" alt="" /></button><i></i><i></i></div>
             </div>
           </div>
@@ -369,7 +370,8 @@
             <p>蜀锦色彩并非简单的颜色叠加，而是在长期织造实践中形成的一套独特审美体系。通过梳理传统蜀锦中的典型色<br />彩、配色关系与视觉特征，探索其背后的色彩规律与东方美学。</p>
           </div>
           <div class="color-swatches"><div class="blue"><span>青</span></div><div class="red"><span>赤</span></div><div class="yellow"><span>黄</span></div><div class="white"><span>白</span></div><div class="black"><span>黑</span></div></div>
-            <p class="color-note">蜀锦受道教“五行学说”的影响，在色彩上运用与之相对应的“五色观”， 即青、赤、黄、白、黑。</p>
+            <p class="color-note">蜀锦色彩与传统“五行”“五色”观念相联系，以青、赤、黄、白、黑为五方正色，并以间色、复色丰富配色层次。其色调典雅浑厚、对比鲜明，配色少则两色，多则二十余色，呈现古朴庄重的审美特征。其中红色尤为驰名，历史上有“蜀红锦”之称。黄修忠在《蜀锦织造技艺》中归纳了由 109 种色彩组成的“蜀锦色谱”。</p>
+            <button class="pattern-button spectrum-entry" type="button" aria-haspopup="dialog"><span>查看蜀锦色谱</span><b><img src="./public/figma-assets/icons/pattern-enter.svg" alt="" /></b></button>
           </div>
         </section>
 
@@ -413,6 +415,8 @@
       </div>
     </div>
     <script src="./interaction.js" defer></script>
+    <script src="./studio-colors.js" defer></script>
+    <script src="./home-colors.js" defer></script>
     <script src="./login-modal.js" defer></script>
   </body>
 </html>

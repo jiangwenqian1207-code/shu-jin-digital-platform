@@ -24,7 +24,7 @@
 .composition-options button{padding:4px;border:1px solid #e1e6e6;border-radius:8px;background:white;min-width:0;height:120px;font-size:16px;line-height:24px}
 .composition-options button>span{display:flex;align-items:center;justify-content:center;height:83px;background:#f3eee5;border-radius:8px;overflow:hidden;margin-bottom:5px}
 .composition-options button[aria-pressed=true],.palette-options button[aria-pressed=true]{border-color:#eeac35;box-shadow:0 0 0 1px #eeac35}
-.palette-card{height:216px;border:1px solid #e1e6e6;border-radius:8px;background:#fff;padding:12px 11px}
+.palette-card{min-height:216px;height:auto;border:1px solid #e1e6e6;border-radius:8px;background:#fff;padding:12px 11px}
 .palette-tabs{display:flex;border-radius:4px;background:#e9e8e0;height:30px;margin-bottom:16px}
 .palette-tabs button{flex:1;border:0;background:none;border-radius:4px;font-size:16px;padding:0}
 .palette-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 4px}
@@ -76,6 +76,27 @@
 .product-status{margin:12px 0 0;font-size:12px;color:#939497}
 @media(max-width:767px){.studio-stage:has(#product-view:not([hidden])){padding:16px}.product-viewport{height:400px}.product-view-tools{align-items:flex-end}.product-view-tools span{max-width:160px}.product-texture-tools{gap:10px}}
 .custom-color-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.palette-options button.historic-palette{display:flex;flex-direction:column;gap:5px;padding:5px;min-width:0;height:auto;align-items:stretch}
+.historic-palette img{display:block;width:100%;height:54px;object-fit:cover;border-radius:3px}
+.historic-palette small{font-size:10px;line-height:1.5;text-align:left;white-space:normal}
+.historic-palette .swatch{width:100%!important;height:28px;min-height:28px}
+.role-colors{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:16px}
+.role-color{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0;border:0;background:none;padding:0;cursor:pointer}
+.role-color i{display:block;width:min(100%,52px);aspect-ratio:1;border-radius:7px;border:1px solid #ddd;box-shadow:0 1px 3px #0001}
+.role-color span{font-size:13px}.role-color small{font-size:12px;color:#939497}
+.role-help,#extraction-status{font-size:12px!important;line-height:1.7;color:#939497;margin:12px 0}
+.reference-upload{position:relative;display:flex;align-items:center;justify-content:center;box-sizing:border-box;height:40px;text-align:center;border:1px solid #e1e6e6;border-radius:4px;background:#fcfbf4;padding:0 10px;font-size:13px;cursor:pointer}
+.reference-upload input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}
+.reference-upload:focus-within{outline:2px solid #eeac35}
+#reference-thumbnail{display:block;width:100%;height:90px;object-fit:contain;margin:10px 0}
+#extracted-colors,.reference-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.role-switcher{display:flex;gap:8px;flex-wrap:wrap}
+.role-switcher button{border:1px solid #e1e6e6;background:#f7f6f0;color:#626366;border-radius:4px;padding:7px 12px;cursor:pointer}
+.role-switcher button[aria-pressed=true]{background:#1e1e20;color:white}
+.spectrum-subtitle{font-size:14px;margin:16px 0 12px;font-weight:500}
+.role-color-info{display:flex;align-items:center;gap:12px;margin:16px 0;font-size:13px;line-height:1.7}
+.role-color-info i{display:block;width:48px;height:48px;flex:none;border-radius:50%;border:1px solid #e1e6e6}
+.role-color-info p{margin:4px 0 0;font-size:12px;user-select:text}
 .palette-tabs:has([data-palette-tab=custom].selected){margin-bottom:12px}
 .custom-color-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;min-height:20px;font-size:14px;color:#626366}
 .custom-color-heading button{font-size:12px;color:#939497;white-space:nowrap}
@@ -85,7 +106,8 @@
 #custom-selection{padding-top:4px}
 #custom-selection .chosen-color-row{gap:7px}
 #custom-selection .spectrum-swatch{height:40px;border-radius:4px}
-#custom-reset{height:32px;margin-top:36px;letter-spacing:3px}
+#custom-reset{height:40px;margin-top:12px;letter-spacing:3px}
+#extraction-status:empty,#extracted-colors:empty{display:none}
 .spectrum-swatch{display:block;min-width:0;height:24px;border:0;border-radius:0;padding:0;cursor:pointer;position:relative}
 .spectrum-swatch:hover,.spectrum-swatch:focus-visible{outline:2px solid #1e1e20;outline-offset:2px;z-index:1}
 .spectrum-swatch[aria-pressed=true]{outline:2px solid #1e1e20;outline-offset:2px}

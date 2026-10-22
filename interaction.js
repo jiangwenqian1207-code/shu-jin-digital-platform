@@ -113,15 +113,23 @@
       alt: '宋代灯笼锦纹'
     },
     {
-      title: '明清时期',
-      description: '明清时期蜀锦虽受战乱影响一度衰落，但清初逐渐恢复生产，纹样体系也继续发展。明代多在唐宋传统基础上创新，题材以花卉、蝴蝶、几何及吉祥纹样为主；清代则形成方方锦、雨丝锦、月华锦等代表样式，构图更规整繁密，色彩层次丰富，整体呈现出精致华丽、装饰性强的艺术特征。',
+      title: '明代时期',
+      description: '明代蜀锦多在唐宋传统基础上创新，题材以花卉、蝴蝶、几何及吉祥纹样为主，延续并发展了传统织锦的装饰语言。',
       caption: '图例：明代太子绵羊锦纹',
       image: './public/digital-pattern-library/ming-dynasty-prince-mianyang-brocade-pattern.jpg',
       alt: '明代太子绵羊锦纹'
+    },
+    {
+      title: '清代时期',
+      description: '清初蜀锦逐渐恢复生产，纹样体系继续发展，形成方方锦、雨丝锦、月华锦等代表样式。构图规整繁密，色彩层次丰富，呈现出精致华丽、装饰性强的艺术特征。',
+      caption: '图例：清代雨丝锦纹',
+      image: './public/digital-pattern-library/qing-dynasty-rain-thread-brocade-pattern.jpg',
+      alt: '清代雨丝锦纹'
     }
   ];
   const mobileTimeline = window.matchMedia('(max-width: 767px)');
   if (eraTrack && eraLabels.length && eraControl) {
+    eraControl.setAttribute('aria-valuemax', String(eraLabels.length - 1));
     const eraSlotWidth = 96;
     let eraProgress = 0;
     let eraDragging = false;

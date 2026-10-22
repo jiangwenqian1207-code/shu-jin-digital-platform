@@ -1,13 +1,6 @@
 (() => {
   const $ = (s) => document.querySelector(s);
-  const palettes = [
-    ['#23130a','#f8f4eb','#c66146','#f9f1c5','#939a5c'],
-    ['#2c2d4a','#f8dcd1','#535838','#ba563c','#693330'],
-    ['#dbd07f','#4f7143','#404470','#f0d9d1','#e6e3df'],
-    ['#ba212a','#cde94f','#7663d0','#f0e48e','#916a88'],
-    ['#ead9d2','#66432c','#c4573b','#d9b9ab','#846654'],
-    ['#c7c1ba','#cc6a4d','#53582c','#312725','#7d7b66']
-  ];
+  const palettes = window.studioHistoricPatterns.map(p=>({...p,colors:null}));
   let selectedPalette = -1, noticeTimer;
   const history = new Set();
   function notify(message) {
@@ -19,7 +12,7 @@
   function swatch(colors) {
     const span = document.createElement('span');
     span.className = 'swatch';
-    colors.forEach(color => { const i = document.createElement('i'); i.style.backgroundColor = color; span.append(i); });
+    colors.forEach(color => { const i = document.createElement('i'); i.style.backgroundColor = color.hex; i.title=color.hex.toUpperCase()+' · '+Math.round(color.weight*100)+'%';span.append(i); });
     return span;
   }
   function renderPalettes(container, indices = palettes.map((_, i) => i)) {
@@ -27,21 +20,34 @@
     indices.forEach(index => {
       const button = document.createElement('button');
       button.type = 'button';
-      button.setAttribute('aria-label', '经典配色 ' + (index + 1));
+      const palette=palettes[index];
+      button.className='historic-palette';
+      button.hidden=container.id==='palette-options' && index>=6 && !classicExpanded;
+      button.setAttribute('aria-label', palette.name+' 配色');
       button.setAttribute('aria-pressed', String(index === selectedPalette));
-      button.append(swatch(palettes[index]));
+      const image=document.createElement('img');image.src=palette.url;image.alt=palette.name;image.loading='lazy';button.append(image);
+      if(palette.colors)button.append(swatch(palette.colors));
+      const name=document.createElement('small');name.textContent=palette.name;button.append(name);
+      button.disabled=!palette.colors;
+      if(!palette.colors){const state=document.createElement('small');state.textContent=palette.error?'取色失败，请刷新重试':'正在提取五色…';button.append(state);}
       button.addEventListener('click', () => {
         selectedPalette = index;
         history.add(index);
         renderPalettes($('#palette-options'));
-        if ($('#options-dialog').open) renderPalettes($('#options-content'));
+        if ($('#options-dialog').open && $('#options-title').textContent==='经典色彩体系') renderPalettes($('#options-content'));
         $('#palette-history').classList.add('palette-options');
         renderPalettes($('#palette-history'), [...history]);
+        document.dispatchEvent(new CustomEvent('studio:classic-palette',{detail:{colors:palette.colors.map((c,i)=>({...c,name:palette.name+' · 取色 '+(i+1)}))}}));
       });
       container.append(button);
     });
   }
+  let classicExpanded=false;
   renderPalettes($('#palette-options'));
+  Promise.all(palettes.map(async palette=>{
+    try{palette.colors=await window.extractStudioColors(palette.url);if(palette.colors.length!==5)throw new Error('不足五色');}
+    catch{palette.colors=null;palette.error=true;}
+  })).then(()=>{renderPalettes($('#palette-options'));if($('#options-dialog').open&&$('#options-title').textContent==='经典色彩体系')renderPalettes($('#options-content'));});
   function selectComposition(value) {
     document.querySelectorAll('[data-composition]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.composition === value)));
   }
@@ -98,10 +104,10 @@
     dialog.showModal();
   });
   $('#all-palettes').addEventListener('click', () => {
-    $('#options-title').textContent = '经典色彩体系';
-    $('#options-content').className = 'palette-options';
-    renderPalettes($('#options-content'));
-    dialog.showModal();
+    classicExpanded=!classicExpanded;
+    $('#all-palettes').textContent=classicExpanded?'收起':'查看全部';
+    $('#all-palettes').setAttribute('aria-expanded',String(classicExpanded));
+    renderPalettes($('#palette-options'));
   });
   $('.icon-button').addEventListener('click', () => { setStep('create'); $('#prompt').focus(); });
 })();

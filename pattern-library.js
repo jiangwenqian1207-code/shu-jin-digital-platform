@@ -99,43 +99,9 @@
   document.addEventListener('focusin', event => {
     if (!event.target.closest('.library-filter')) closeFilters();
   });
-  const patterns = [
-    ['战国 塔形纹锦','./public/digital-pattern-library/warring-states-tower-geometric-pattern.jpg','免费','[1.2K]','0'],
-    ['战国 龙凤舞人纹锦','./public/digital-pattern-library/warring-states-dancer-animal-pattern.jpg','免费','[0.9K]','0'],
-    ['汉 五星出东方利中国','./public/digital-pattern-library/han-jin-five-stars-brocade-pattern.jpg','免费','[5.9K]','0'],
-    ['明 太子绵羊锦纹','./public/digital-pattern-library/ming-dynasty-prince-mianyang-brocade-pattern.jpg','免费','[5.2K]','0'],
-    ['清 雨丝锦纹','./public/digital-pattern-library/qing-dynasty-rain-thread-brocade-pattern.jpg','免费','[2.4K]','0'],
-    ['蜂巢花格纹','./public/ai-pattern-generation/ai-bee-floral-lattice-pattern.png','AI','[3.8K]','1.2'],
-    ['明 散花蜀香缎纹','./public/digital-pattern-library/ming-scattered-floral-shuxiang-satin-pattern.jpg','免费','[4.4K]','0'],
-    ['宋 灯笼锦纹','./public/digital-pattern-library/song-dynasty-lantern-brocade-pattern.jpg','免费','[2.1K]','0'],
-    ['雏菊卷草藤纹','./public/ai-pattern-generation/ai-daisy-scroll-vine-pattern.png','AI','[2.8K]','0.8'],
-    ['蓝地折枝花纹','./public/ai-pattern-generation/ai-blue-ground-floral-branch-pattern.png','AI','[1.6K]','1.5'],
-    ['几何点阵纹','./public/ai-pattern-generation/ai-geometric-dot-lattice-pattern.png','AI','[4.6K]','0.6'],
-    ['藤花垂饰纹','./public/ai-pattern-generation/ai-wisteria-pendant-pattern.png','AI','[4.2K]','0.7'],
-    ['宫灯流苏纹','./public/ai-pattern-generation/ai-palace-lantern-tassel-pattern (1).png','AI','[3.0K]','0.5'],
-    ['唐 联珠对鹊锦纹','./public/digital-pattern-library/tang-dynasty-pearl-roundel-paired-magpie-brocade-pattern.jpg','免费','[1.7K]','0'],
-    ['北朝 方格兽锦纹','./public/digital-pattern-library/northern-dynasties-grid-beast-brocade-pattern.jpg','免费','[1.9K]','0']
-  ];
+  const patterns = window.patternCatalog.map(p=>[p.name,p.image,p.kind==='historic'?'免费':'AI',p.views,p.price]);
+  const patternMetadata = Object.fromEntries(window.patternCatalog.map(p=>[p.name,p]));
   const grid = document.querySelector('#pattern-grid');
-  // Curated against the local artwork images. Subjects are inclusive;
-  // color describes the dominant palette, not every small accent.
-  const patternMetadata = {
-    '战国 塔形纹锦': { subject: ['几何纹'], composition: ['矩形式'], era: '春秋战国', color: '黑' },
-    '战国 龙凤舞人纹锦': { subject: ['动物纹', '人物纹', '几何纹', '组合纹'], composition: ['菱形式'], era: '春秋战国', color: '红' },
-    '汉 五星出东方利中国': { subject: ['动物纹', '组合纹'], composition: ['散点式'], era: '秦汉', color: '蓝' },
-    '明 太子绵羊锦纹': { subject: ['人物纹', '动物纹', '植物纹', '器物纹', '组合纹'], composition: ['散点式'], era: '明清', color: '黑' },
-    '清 雨丝锦纹': { subject: ['几何纹'], composition: ['矩形式'], era: '明清', color: '红' },
-    '蜂巢花格纹': { subject: ['植物纹', '动物纹', '几何纹', '组合纹'], composition: ['菱形式'], era: '现代', color: '绿' },
-    '明 散花蜀香缎纹': { subject: ['植物纹'], composition: ['散点式'], era: '明清', color: '黑' },
-    '宋 灯笼锦纹': { subject: ['器物纹', '植物纹', '动物纹', '几何纹', '组合纹'], composition: ['灯笼锦式'], era: '宋元', color: '红' },
-    '雏菊卷草藤纹': { subject: ['植物纹'], composition: ['散点式'], era: '现代', color: '绿' },
-    '蓝地折枝花纹': { subject: ['植物纹'], composition: ['散点式'], era: '现代', color: '蓝' },
-    '几何点阵纹': { subject: ['几何纹'], composition: ['菱形式'], era: '现代', color: '蓝' },
-    '藤花垂饰纹': { subject: ['植物纹'], composition: ['散点式'], era: '现代', color: '蓝' },
-    '宫灯流苏纹': { subject: ['器物纹', '植物纹', '组合纹'], composition: ['灯笼锦式'], era: '现代', color: '绿' },
-    '唐 联珠对鹊锦纹': { subject: ['动物纹', '植物纹', '几何纹', '组合纹'], composition: ['陵阳公样式'], era: '隋唐', color: '黄' },
-    '北朝 方格兽锦纹': { subject: ['动物纹', '几何纹', '组合纹'], composition: ['方格式'], era: '魏晋南北朝', color: '黄' }
-  };
   const matchesFilters = item => {
     const metadata = patternMetadata[item[0]];
     return Object.entries(selectedFilters).every(([key, value]) =>
@@ -147,11 +113,50 @@
   const categoryButton = document.querySelector('.library-category');
   const categoryMenu = document.querySelector('.library-category-menu');
   let price = 'all';
-  const draw = () => {
+  const pageSize = 15;
+  let currentPage = 1;
+  let visibleEnd = pageSize;
+  let filteredPatterns = [];
+  const pagination = document.querySelector('.library-pagination');
+  const more = document.querySelector('#pattern-show-more');
+  const updateNavigation = () => {
+    const pages = Math.ceil(filteredPatterns.length / pageSize);
+    pagination.innerHTML = Array.from({length:pages}, (_,i) => `<button type="button" data-page="${i+1}" class="${currentPage===i+1?'active':''}" ${currentPage===i+1?'aria-current="page"':''}>${i+1}</button>`).join('') + (pages ? `<button type="button" data-page="${currentPage+1}" aria-label="下一页" ${currentPage>=pages?'disabled':''}><img src="./public/icons/Polygon 10.svg" alt=""></button>` : '');
+    more.hidden = visibleEnd >= filteredPatterns.length;
+  };
+  const draw = (options = {}) => {
+    if (!options.preservePage) { currentPage = 1; visibleEnd = pageSize; }
     const keyword = search.value.trim();
-    grid.innerHTML = patterns.filter(matchesFilters).filter((item) => (price === 'all' || (price === 'free') === (item[2] === '免费')) && item[0].includes(keyword)).map((item) => `<article class="pattern-card"><div class="pattern-meta"><span class="pattern-tag ${item[2] === 'AI' ? 'ai' : ''}">${item[2]}</span><span class="pattern-views">${item[3]}<button class="pattern-favorite" type="button" aria-label="收藏 ${item[0]}" aria-pressed="false"><img src="./public/icons/icon-favorite-default.svg" alt="" /></button></span></div><img class="pattern-image" src="${item[1]}" alt="${item[0]}" /><div class="pattern-info"><strong>${item[0]}</strong><span class="pattern-price">￥${item[4]}</span></div><div class="pattern-download-wrap"><button class="pattern-download" type="button" aria-expanded="false">下载</button><div class="pattern-download-menu" hidden role="menu" aria-label="${item[0]} 下载格式"><button type="button" role="menuitem" data-download-format="SVG">下载SVG</button><button type="button" role="menuitem" data-download-format="PNG">下载PNG</button><button type="button" role="menuitem" data-download-format="source">下载源文件</button></div></div></article>`).join('') || '<p class="pattern-empty">没有找到匹配的纹样。</p>';
+    filteredPatterns = patterns.filter(matchesFilters).filter((item) => (price === 'all' || (price === 'free' ? item[2] === '免费' : item[4] !== '待定' && item[2] !== '免费')) && item[0].includes(keyword));
+    grid.innerHTML = filteredPatterns.slice((currentPage - 1) * pageSize, visibleEnd).map((item) => `<article class="pattern-card"><div class="pattern-meta"><span class="pattern-tag ${item[2] === 'AI' ? 'ai' : ''}">${item[2]}</span><span class="pattern-views">${item[3]}<button class="pattern-favorite" type="button" aria-label="收藏 ${item[0]}" aria-pressed="false"><img src="./public/icons/icon-favorite-default.svg" alt="" /></button></span></div><img class="pattern-image" src="${item[1]}" alt="${item[0]}" /><div class="pattern-info"><strong>${item[0]}</strong><span class="pattern-price">${item[4] === '待定' ? '待定' : '￥' + item[4]}</span></div><div class="pattern-download-wrap"><button class="pattern-download" type="button" aria-expanded="false">下载</button><div class="pattern-download-menu" hidden role="menu" aria-label="${item[0]} 下载格式"><button type="button" role="menuitem" data-download-format="SVG">下载SVG</button><button type="button" role="menuitem" data-download-format="PNG">下载PNG</button><button type="button" role="menuitem" data-download-format="source">下载源文件</button></div></div></article>`).join('') || '<p class="pattern-empty">没有找到匹配的纹样。</p>';
+    updateNavigation();
+    grid.querySelectorAll('.pattern-card').forEach((card,i) => {
+      const item = filteredPatterns[(currentPage-1)*pageSize+i];
+      const record = patternMetadata[item[0]];
+      const link = document.createElement('a');
+      link.className = 'pattern-detail-link';
+      link.href = './pattern-detail.html?id='+record.id;
+      link.setAttribute('aria-label','查看'+record.name+'详情');
+      card.append(link);
+    });
   };
   draw();
+  more.addEventListener('click', () => {
+    const previousCards = [...grid.children];
+    const previousCount = previousCards.length;
+    visibleEnd += pageSize;
+    draw({preservePage:true});
+    // Retain existing cards and their interaction state when appending.
+    [...grid.children].slice(0,previousCount).forEach((card,i) => card.replaceWith(previousCards[i]));
+  });
+  pagination.addEventListener('click', event => {
+    const button = event.target.closest('[data-page]');
+    if (!button || button.disabled) return;
+    currentPage = Number(button.dataset.page);
+    visibleEnd = currentPage * pageSize;
+    draw({preservePage:true});
+    grid.scrollIntoView({behavior:'smooth',block:'start'});
+  });
   form.addEventListener('submit', (event) => { event.preventDefault(); draw(); });
   search.addEventListener('input', draw);
   const selectPrice = (nextPrice) => {

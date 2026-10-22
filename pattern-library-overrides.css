@@ -319,3 +319,12 @@
   background: linear-gradient(#111, #666);
   content: "";
 }
+.library-browse-controls{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:40px}
+.library-browse-controls .library-pagination{margin-top:0}
+#pattern-show-more{width:164px;height:40px;border:0;border-radius:24px;background:#202020;color:#fff;font:inherit;cursor:pointer}
+#pattern-show-more[hidden]{display:none}
+.library-pagination button:disabled{opacity:.35;cursor:default}
+.pattern-card{position:relative}
+.pattern-detail-link{position:absolute;inset:0;z-index:1;border-radius:inherit}
+.pattern-detail-link:focus-visible{outline:3px solid #bc3924;outline-offset:3px}
+.pattern-card .pattern-favorite,.pattern-card .pattern-download-wrap{position:relative;z-index:2}

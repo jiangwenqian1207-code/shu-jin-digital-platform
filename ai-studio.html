@@ -30,9 +30,9 @@
         <section><h2>色彩体系</h2><div class="palette-card">
           <div class="palette-tabs" aria-label="配色来源"><button type="button" class="selected" data-palette-tab="classic" aria-pressed="true">经典</button><button type="button" data-palette-tab="custom" aria-pressed="false">自定义</button><button type="button" data-palette-tab="history" aria-pressed="false">历史</button></div>
           <div id="palette-options" class="palette-options" aria-label="经典配色"></div>
-          <div id="custom-colors" hidden><div class="custom-color-heading"><span id="custom-color-title">选择你的五色搭配</span><button type="button" class="quiet" id="all-custom-colors">查看全部</button></div><div id="custom-color-picker"><div class="custom-color-grid" aria-label="蜀锦色彩"></div><button type="button" class="custom-confirm" disabled>确定（0/5）</button></div><div id="custom-selection" hidden aria-label="已确认的五色搭配"><div class="chosen-color-row"></div><button type="button" id="custom-reset">重置</button></div></div>
+          <div id="custom-colors" hidden><div class="custom-color-heading"><span>按功能配置五色</span><button type="button" class="quiet" id="all-custom-colors">蜀锦色谱</button></div><div class="role-colors" aria-label="五个功能色位"></div><p class="role-help">点击色位，从蜀锦色谱或参考图提取色中替换。</p><label class="reference-upload">上传参考图提取颜色<input id="palette-reference" type="file" accept="image/png,image/jpeg,image/webp"></label><p id="extraction-status" role="status"></p><img id="reference-thumbnail" alt="用户上传的取色参考图" hidden><div id="extracted-colors" aria-label="参考图提取色"></div><button type="button" id="custom-reset">恢复默认配色</button></div>
           <div id="palette-history" hidden><p>本次选择的配色会显示在这里。</p></div>
-          <button type="button" class="quiet palette-more" id="all-palettes">查看全部</button>
+          <button type="button" class="quiet palette-more" id="all-palettes" aria-expanded="false" aria-controls="palette-options">查看全部</button>
         </div></section>
         <section class="description-section"><h2><label for="prompt">创作描述</label></h2><textarea id="prompt" placeholder="用文字描述你想要的纹样......" maxlength="2000"></textarea></section>
         <button class="generate-button" type="submit"><img src="./public/icons/icon-generate-pattern.svg" alt="">生成纹样</button>
@@ -99,5 +99,5 @@
     </div>
     
     
-<script src="./login-modal.js"></script><script src="./studio-colors.js"></script><script src="./studio-color-panel.js"></script><script src="./ai-studio.js"></script><script type="module" src="./studio-preview.mjs"></script>
+<script src="./login-modal.js"></script><script src="./studio-colors.js"></script><script src="./studio-color-extraction.js"></script><script src="./studio-color-panel.js"></script><script src="./ai-studio.js"></script><script type="module" src="./studio-preview.mjs"></script>
 </body></html>
