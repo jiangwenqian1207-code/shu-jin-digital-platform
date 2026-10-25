@@ -891,6 +891,64 @@
     element.style.transform = `translate3d(0, ${((1 - eased) * distance).toFixed(2)}px, 0)`;
   };
 
+  const typedCaptions = new WeakMap();
+  const renderTypedCaption = (element, progress) => {
+    let state = typedCaptions.get(element);
+    if (!state) {
+      const fullText = element.textContent;
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) {
+        if (!walker.currentNode.parentElement.closest('strong')) nodes.push(walker.currentNode);
+      }
+      const letters = [];
+      nodes.forEach(node => {
+        const fragment = document.createDocumentFragment();
+        Array.from(node.textContent).forEach(char => {
+          const letter = document.createElement('span');
+          letter.textContent = char;
+          letter.setAttribute('aria-hidden', 'true');
+          // Keep the complete text in layout, including its original line breaks.
+          letter.style.cssText = 'display:inline!important;visibility:hidden;';
+          letters.push(letter);fragment.append(letter);
+        });
+        // A caption is a column flex container. Keep each original text node in
+        // one wrapper so individual letters do not become vertical flex items.
+        const textRun = document.createElement('span');
+        textRun.className = 'flow-typewriter-run';
+        textRun.style.display = 'inline';
+        textRun.append(fragment);
+        node.replaceWith(textRun);
+      });
+      element.setAttribute('aria-label', fullText);
+      state = { letters, count: 0, frame: 0, elapsed: 0, last: 0 };
+      typedCaptions.set(element, state);
+    }
+    element.style.transform = 'none';
+    element.style.opacity = progress > 0 ? '1' : '0';
+    if (progress <= 0) {
+      cancelAnimationFrame(state.frame);state.frame = 0;state.elapsed = 0;state.last = 0;
+      state.letters.forEach(letter => { letter.style.visibility = 'hidden'; });state.count = 0;
+      return;
+    }
+    if (reducedMotion.matches) {
+      cancelAnimationFrame(state.frame);state.frame = 0;
+      state.letters.forEach(letter => { letter.style.visibility = 'visible'; });state.count = state.letters.length;
+      return;
+    }
+    if (state.frame || state.count === state.letters.length) return;
+    const tick = now => {
+      const rect = element.getBoundingClientRect();
+      const visible = !document.hidden && rect.bottom > 0 && rect.top < innerHeight;
+      if (visible) state.elapsed += state.last ? Math.min(now - state.last, 80) : 36;
+      state.last = now;
+      const count = Math.min(state.letters.length, Math.floor(state.elapsed / 36));
+      while (state.count < count) state.letters[state.count++].style.visibility = 'visible';
+      state.frame = state.count < state.letters.length ? requestAnimationFrame(tick) : 0;
+    };
+    state.last = 0;state.frame = requestAnimationFrame(tick);
+  };
+
   const renderStageItems = (stage) => {
     const steps = stage.steps || [];
     const weights = steps.map((step) => ({
@@ -922,7 +980,7 @@
       cursor += weight.dashes;
 
       const textProgress = weight.texts ? phaseProgress(timeline, cursor, weight.texts) : 1;
-      step.texts.forEach((element) => renderVisual(element, textProgress, 10));
+      step.texts.forEach((element) => renderTypedCaption(element, textProgress));
       cursor += weight.texts;
 
       const imageProgress = weight.images ? phaseProgress(timeline, cursor, weight.images) : 1;
@@ -1009,9 +1067,15 @@
       ];
     let precedingExpansion = 0;
 
-    stageSequence.forEach(({ stage, baseCenter }) => {
+    stageSequence.forEach(({ stage, baseCenter }, index) => {
+      const precedingStage = stageSequence[index - 1]?.stage;
+      const available = !precedingStage || (precedingStage.available && precedingStage.progress >= 0.995);
+      stage.available = available;
+      stage.button?.classList.toggle('stage-available', available);
+      stage.button?.setAttribute('aria-hidden', String(!available));
+      if (stage.button) stage.button.tabIndex = available ? 0 : -1;
       const stageCenter = summaryTop + baseCenter + precedingExpansion;
-      const revealDistance = Math.max(0, (viewportCenter - stageCenter) * flowScrollSpeed);
+      const revealDistance = available ? Math.max(0, (viewportCenter - stageCenter) * flowScrollSpeed) : 0;
       stage.progress = reducedMotion.matches
         ? (revealDistance > 0 ? 1 : 0)
         : clamp(revealDistance / stage.maxExpansion, 0, 1);

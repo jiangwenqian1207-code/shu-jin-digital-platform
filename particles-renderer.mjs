@@ -26,5 +26,10 @@ export class ParticleRenderer{
  resize(w,h){this.renderer.setSize(w,h,false);this.camera.aspect=w/Math.max(1,h);this.camera.position.z=Math.max(9.5,9.5/this.camera.aspect);this.camera.updateProjectionMatrix();this.uniforms.pixels.value=Math.max(1.4,Math.min(w,h)*this.renderer.getPixelRatio()/240*1.1);}
  draw(t,formation,angle){this.uniforms.time.value=t;this.uniforms.formation.value=formation;this.points.rotation.y=angle;this.camera.position.z=(9.5-2*formation)*Math.max(1,1/this.camera.aspect);this.renderer.render(this.scene,this.camera);}
  blend(from,to,t){this.uniforms.pattern.value=this.textures[from];this.uniforms.nextPattern.value=this.textures[to];this.uniforms.colorMix.value=t;}
+ setCustomImage(image){
+  const slot=this.customSlot??this.textures.length;this.customSlot=slot;
+  const previous=this.textures[slot],texture=new THREE.Texture(image);texture.colorSpace=THREE.SRGBColorSpace;texture.needsUpdate=true;
+  this.textures[slot]=texture;this.blend(slot,slot,0);previous?.dispose();return slot;
+ }
  destroy(){this.geometry.dispose();this.material.dispose();this.textures.forEach(t=>t.dispose());this.renderer.dispose();}
 }

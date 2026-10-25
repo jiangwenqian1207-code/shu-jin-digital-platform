@@ -140,7 +140,8 @@
       link.className = 'pattern-detail-link';
       link.href = './pattern-detail.html?id='+record.id;
       link.setAttribute('aria-label','查看'+record.name+'详情');
-      card.append(link);
+      link.textContent = '查看纹样详情';
+      card.querySelector('.pattern-download-wrap').before(link);
     });
   };
   draw();

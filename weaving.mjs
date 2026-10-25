@@ -1,6 +1,7 @@
 import { patterns, Typewriter } from './weaving-data.mjs';
 import { GestureController, ShuttleTracker, WeaveProgress, PatternTransition, WEFT_ROWS } from './weaving-gesture.mjs';
 import { LoomRenderer, CanvasLoomRenderer } from './weaving-renderer.mjs';
+import { setupArtworkControls } from './artwork-controls.mjs';
 
 const $=id=>document.getElementById(id);
 const stage=$('loom-frame'),video=$('hand-video'),status=$('camera-status'),cameraButton=$('camera-toggle'),hold=$('weave-hold'),next=$('pattern-next');
@@ -13,8 +14,19 @@ let cameraRequested=false;
 const transition=new PatternTransition(patterns.length,index=>{
   loom.reset();gesture.resetMotion();release();renderer.setImage(images[index]);showPattern(index);
 });
+const artworkControls=setupArtworkControls({stage,uploadHost:document.querySelector('.interaction-panel'),patternAspect:16/9,fullscreenButtons:[hold,next],
+ onPattern(image,name){
+  if(disposed)return;transition.started=null;transition.index=patterns.length-1;next.disabled=false;
+  loom.reset();gesture.resetMotion();release();renderer.setImage(image);stage.dataset.patternSource='local';
+  $('pattern-index').textContent='本地';$('pattern-title').textContent=name;$('pattern-english').textContent='YOUR PATTERN';
+  const text='用左右往返的动作，将自己的纹样一梭一梭织入经纬。';$('pattern-accessible').textContent=text;writer.start(text);
+  document.querySelector('.pattern-index').classList.add('is-local');
+ },
+ onRestorePattern(){transition.started=null;transition.index=0;next.disabled=false;loom.reset();gesture.resetMotion();release();renderer.setImage(images[0]);showPattern(0);}
+});
 
 function showPattern(index){
+  stage.dataset.patternSource='default';document.querySelector('.pattern-index').classList.remove('is-local');
   const p=patterns[index];$('pattern-index').textContent=String(index+1).padStart(2,'0');
   $('pattern-title').textContent=p.name;$('pattern-english').textContent=p.english;
   $('pattern-accessible').textContent=p.description;writer.start(p.description);
@@ -26,6 +38,7 @@ function switchPattern(){
 function advance(direction){if(renderer&&transition.started===null)loom.advance(direction);}
 function release(){manual=false;pointerMotion.reset();hold.classList.remove('is-held');}
 function beginHold(event){
+  if(event.target.closest('button,input'))return;
   if(event.button!==undefined&&event.button!==0)return;
   manual=true;pointerMotion.reset();const rect=stage.getBoundingClientRect();pointerMotion.update((event.clientX-rect.left)/rect.width,(event.clientY-rect.top)/rect.height,performance.now());stage.setPointerCapture(event.pointerId);
 }
@@ -125,8 +138,8 @@ async function init(){
       const replacement=$('loom').cloneNode();$('loom').replaceWith(replacement);renderer=new CanvasLoomRenderer(replacement);
     }
     renderer.setImage(images[0]);renderer.resize(stage.clientWidth,stage.clientHeight);resize.observe(stage);
-    $('loading-note').hidden=true;frame=requestAnimationFrame(animate);
-    $('loom').addEventListener('webglcontextlost',event=>{event.preventDefault();cancelAnimationFrame(frame);stopCamera('图形上下文已暂停 · 请刷新恢复');$('loading-note').textContent='图形已暂停，请刷新页面恢复';$('loading-note').hidden=false;});
+    $('loading-note').hidden=true;artworkControls.setReady();frame=requestAnimationFrame(animate);
+    $('loom').addEventListener('webglcontextlost',event=>{event.preventDefault();cancelAnimationFrame(frame);artworkControls.setReady(false);stopCamera('图形上下文已暂停 · 请刷新恢复');$('loading-note').textContent='图形已暂停，请刷新页面恢复';$('loading-note').hidden=false;});
   }catch(error){
     console.error('Weaving assets:',error);stopCamera('素材未能加载');
     $('loading-note').textContent='纹样加载失败，请刷新重试；也可通过右上角返回作品列表。';

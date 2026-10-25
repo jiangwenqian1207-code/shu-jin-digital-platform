@@ -1,0 +1,22 @@
+.artwork-upload-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.artwork-upload-row button,.artwork-fullscreen-actions button{font:inherit;font-size:12px;line-height:1.5;color:#d8c9aa;background:#15191be8;border:1px solid #cdb98e55;border-radius:4px;padding:7px 12px;cursor:pointer}
+.artwork-upload-row button:disabled{opacity:.45;cursor:wait}
+.artwork-upload-row .artwork-restore{color:#929d9f;border-color:#ffffff24}
+.artwork-file-message{font-size:12px;line-height:1.6;color:#9fa7a8;margin:7px 0 0;overflow-wrap:anywhere}
+.information>.artwork-upload-row,.information>.artwork-file-message{grid-column:1/-1}
+.pattern-index.is-local .pattern-total{display:none}
+.pattern-information h1,.information h2,.music-name{overflow-wrap:anywhere}
+.artwork-fullscreen{position:absolute;z-index:8;right:16px;bottom:16px;width:40px;height:40px;padding:8px;display:grid;place-items:center;border:1px solid #ffffff38;border-radius:5px;background:#0b0e10d9;color:#e6dccb;cursor:pointer}
+.artwork-fullscreen:hover{border-color:#d3bd92;background:#252a2c}
+.artwork-fullscreen:focus-visible,.artwork-upload-row button:focus-visible{outline:2px solid #d3bd92;outline-offset:3px}
+.artwork-fullscreen .exit-icon,[data-fullscreen=true]>.artwork-fullscreen .enter-icon{display:none}
+[data-fullscreen=true]>.artwork-fullscreen .exit-icon{display:block}
+.artwork-viewport:fullscreen,.artwork-viewport.artwork-immersive{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;min-height:0!important;margin:0!important;padding:0!important;aspect-ratio:auto!important;transform:none!important;opacity:1!important;border:0!important;background:#0b0e10!important;z-index:2147483000!important}
+.artwork-viewport:fullscreen::backdrop{background:#0b0e10}
+.artwork-immersive-open{overflow:hidden!important}
+.artwork-viewport[data-fullscreen=true]>canvas{width:100%!important;height:100%!important}
+.artwork-fullscreen-actions{display:none;position:absolute;z-index:7;bottom:18px;left:50%;transform:translateX(-50%);gap:8px;max-width:calc(100% - 140px)}
+[data-fullscreen=true]>.artwork-fullscreen-actions{display:flex}
+[data-fullscreen=true]>.frequency-info{bottom:72px}
+.artwork-control-notice{position:absolute;z-index:9;right:16px;bottom:62px;max-width:80%;font-size:12px;background:#101416;padding:8px;color:#dcc8a2}
+@media(max-width:600px){.artwork-fullscreen{right:12px;bottom:12px}.artwork-fullscreen-actions button{padding:6px 8px}.artwork-fullscreen-actions{bottom:14px}}

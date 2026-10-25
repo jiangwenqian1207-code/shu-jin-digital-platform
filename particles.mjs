@@ -1,18 +1,24 @@
 import {ParticleRenderer} from './particles-renderer.mjs';
 import {ParticleGesture} from './particles-gesture.mjs';
 import {Typewriter} from './weaving-data.mjs';
+import {setupArtworkControls} from './artwork-controls.mjs';
 const patterns=[['宋 · 灯笼锦纹','song-dynasty-lantern-brocade-pattern.jpg'],['北朝 · 方格兽锦纹','northern-dynasties-grid-beast-brocade-pattern.jpg'],['AI · 紫藤垂饰纹样','ai-wisteria-pendant-pattern.png']];
 const description='作品以蜀锦纹样为视觉基础，将完整纹样转译为可实时运动的粒子系统。观众通过手势控制粒子的聚合与消散，使纹样在完整与碎片、生成与消解之间不断转换，形成一种由身体参与驱动的数字织构体验。';
 const $=id=>document.getElementById(id),stage=$('particle-stage'),video=$('hand-video'),status=$('camera-status');
 const gesture=new ParticleGesture(),writer=new Typewriter(t=>$('description').textContent=t);
 let renderer,index=0,transition=null,progress=0,angle=0,target=0,targetAngle=0,manual=false,disposed=false,raf=0,last=0;
 let stream=null,worker=null,ready=false,busy=false,generation=0,requested=false,watchdog,initTimer,lastVideo=-1,lastInference=0;
-function show(){ $('pattern-name').textContent=patterns[index][0];$('pattern-index').textContent=`0${index+1} / 03`;$('accessible-description').textContent=description;writer.start(description);for(const [i,b] of [...$('pattern-nav').children].entries())b.setAttribute('aria-current',String(i===index));}
+let localName='';
+const artworkControls=setupArtworkControls({stage,uploadHost:document.querySelector('.information'),fullscreenButtons:[$('preview-form')],
+ onPattern(image,name){if(disposed)return;transition=null;release();localName=name;index=renderer.setCustomImage(image);show();},
+ onRestorePattern(){transition=null;release();index=0;renderer.blend(0,0,0);show();}
+});
+function show(){const local=index>=patterns.length;stage.dataset.patternSource=local?'local':'default';$('pattern-name').textContent=local?localName:patterns[index][0];$('pattern-index').textContent=local?'本地纹样':`0${index+1} / 03`;$('accessible-description').textContent=description;writer.start(description);for(const [i,b] of [...$('pattern-nav').children].entries())b.setAttribute('aria-current',String(i===index));}
 function switchTo(i){if(!renderer||transition||i===index)return;transition={to:i,start:performance.now(),from:progress};release();writer.stop();}
 patterns.forEach((p,i)=>{const b=document.createElement('button');b.textContent=`0${i+1}`;b.setAttribute('aria-label',p[0]);b.onclick=()=>switchTo(i);$('pattern-nav').append(b);});
 function release(){manual=false;target=0;$('preview-form').setAttribute('aria-pressed','false');}
 $('preview-form').onclick=()=>{if(transition)return;manual=!manual;target=manual?1:0;$('preview-form').setAttribute('aria-pressed',String(manual));};
-stage.addEventListener('pointerdown',e=>{if(e.button!==0||transition)return;manual=true;target=1;stage.setPointerCapture(e.pointerId);});
+stage.addEventListener('pointerdown',e=>{if(e.target.closest('button,input')||e.button!==0||transition)return;manual=true;target=1;stage.setPointerCapture(e.pointerId);});
 stage.addEventListener('pointermove',e=>{if(manual){const r=stage.getBoundingClientRect();targetAngle=Math.max(-1.15,Math.min(1.15,((e.clientX-r.left)/r.width-.5)*2.3));}});
 for(const name of ['pointerup','pointercancel','lostpointercapture'])stage.addEventListener(name,release);
 window.addEventListener('blur',release);
@@ -43,5 +49,5 @@ const resize=new ResizeObserver(()=>renderer?.resize(stage.clientWidth,stage.cli
 document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf);release();stopCamera('已暂停摄像头 · 可点击重新开启');}else if(renderer&&!disposed){last=0;raf=requestAnimationFrame(animate);}});
 window.addEventListener('pagehide',()=>{disposed=true;cancelAnimationFrame(raf);stopCamera();writer.stop();resize.disconnect();renderer?.destroy();});
 window.addEventListener('pageshow',e=>{if(e.persisted)location.reload();});
-async function init(){show();try{const images=await Promise.all(patterns.map(p=>new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src='./public/particles/'+p[1];})));if(disposed)return;renderer=new ParticleRenderer($('particle-canvas'),images);renderer.resize(stage.clientWidth,stage.clientHeight);resize.observe(stage);$('loading').hidden=true;$('particle-canvas').addEventListener('webglcontextlost',e=>{e.preventDefault();cancelAnimationFrame(raf);stopCamera();$('loading').hidden=false;$('loading').textContent='图形已暂停，请刷新恢复';});raf=requestAnimationFrame(animate);startCamera();}catch{status.textContent='图形或素材加载失败';$('loading').textContent='无法建立粒子场，请刷新重试或通过 CLOSE 返回';}}
+async function init(){show();try{const images=await Promise.all(patterns.map(p=>new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src='./public/particles/'+p[1];})));if(disposed)return;renderer=new ParticleRenderer($('particle-canvas'),images);renderer.resize(stage.clientWidth,stage.clientHeight);resize.observe(stage);$('loading').hidden=true;artworkControls.setReady();$('particle-canvas').addEventListener('webglcontextlost',e=>{e.preventDefault();cancelAnimationFrame(raf);stopCamera();artworkControls.setReady(false);$('loading').hidden=false;$('loading').textContent='图形已暂停，请刷新恢复';});raf=requestAnimationFrame(animate);startCamera();}catch{status.textContent='图形或素材加载失败';$('loading').textContent='无法建立粒子场，请刷新重试或通过 CLOSE 返回';}}
 init();

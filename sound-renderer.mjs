@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {createWeaveData} from './sound-weave.mjs';
 // Positions and velocities are evaluated on the GPU, with stable per-particle seeds.
 export class SoundRenderer{
  constructor(canvas,images){
@@ -10,7 +11,16 @@ export class SoundRenderer{
   this.g=new THREE.BufferGeometry();this.g.setAttribute('position',new THREE.BufferAttribute(dummy,3));this.g.setAttribute('seed',new THREE.BufferAttribute(seeds,3));
   this.lastTime=null;this.reveal=0;this.warmth=0;this.growth=0;
   this.angle={x:.1,y:0};this.drag=null;this.events=new AbortController();
+  this.zoom={current:1,target:1};this.basePointSize=2;
   canvas.style.touchAction='none';canvas.style.cursor='grab';
+  canvas.addEventListener('wheel',e=>{
+   // Leave browser accessibility zoom alone; only capture scrolling on the artwork.
+   if(e.ctrlKey||e.metaKey||!e.deltaY)return;
+   e.preventDefault();
+   const unit=e.deltaMode===1?16:e.deltaMode===2?canvas.clientHeight:1;
+   const delta=THREE.MathUtils.clamp(e.deltaY*unit,-240,240);
+   this.zoom.target=THREE.MathUtils.clamp(this.zoom.target*Math.exp(-delta*.0015),.5,3);
+  },{passive:false,signal:this.events.signal});
   canvas.addEventListener('pointerdown',e=>{
    if(e.button!==0||this.drag)return;
    this.drag={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);canvas.style.cursor='grabbing';
@@ -29,6 +39,10 @@ export class SoundRenderer{
    attribute vec3 sourceTarget,destinationTarget,seed;attribute vec2 sourceUV,destinationUV;
    uniform float time,phase,loose,pointSize,reveal,warmth;uniform vec4 bands;
    uniform sampler2D oldMap,newMap;varying vec3 tint;varying float visibility,sparkle,front;
+   #ifdef WOVEN_THREAD
+   attribute vec3 thread;uniform float threadHalfWidth;
+   varying float threadAcross,threadDirection;
+   #endif
    // A particle's immutable texture sample selects its palette region, never its position.
    float hueOf(vec3 c){
     float hi=max(c.r,max(c.g,c.b)),lo=min(c.r,min(c.g,c.b)),d=hi-lo;
@@ -94,6 +108,12 @@ export class SoundRenderer{
     palette=mix(neutral,palette,smoothstep(.06,.38,saturation));
     tint=mix(baseColor,palette,.62);
     tint=clamp(tint,0.,1.);
+    #ifdef WOVEN_THREAD
+    // Only the drawing primitive changes; audio deformation above is shared.
+    p.xy+=thread.z<.5?vec2(thread.x*threadHalfWidth,0.):vec2(0.,thread.x*threadHalfWidth);
+    p.z+=thread.y;
+    threadAcross=thread.x;threadDirection=thread.z;
+    #endif
     vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp(pointSize*(.78+.27*front)*8./-mv.z,1.,4.);
    }`,fragmentShader:`varying vec3 tint;varying float visibility,sparkle,front;
    void main(){float r=length(gl_PointCoord-.5);if(r>.5||visibility<.012)discard;gl_FragColor=vec4(tint*sparkle,visibility*(1.-smoothstep(.18,.5,r)));
@@ -101,10 +121,45 @@ export class SoundRenderer{
    #include <colorspace_fragment>
    }`});
   this.points=new THREE.Points(this.g,this.m);this.points.frustumCulled=false;this.scene.add(this.points);this.setTargets(0,0);
+  const weave=createWeaveData();
+  this.weaveGeometry=new THREE.BufferGeometry();
+  const centers=new THREE.BufferAttribute(weave.positions,3),uvs=new THREE.BufferAttribute(weave.uvs,2);
+  this.weaveGeometry.setAttribute('position',centers);
+  // Keep neighboring thread samples connected when the pattern changes.
+  for(const name of ['sourceTarget','destinationTarget'])this.weaveGeometry.setAttribute(name,centers);
+  for(const name of ['sourceUV','destinationUV'])this.weaveGeometry.setAttribute(name,uvs);
+  this.weaveGeometry.setAttribute('seed',new THREE.BufferAttribute(weave.seeds,3));
+  this.weaveGeometry.setAttribute('thread',new THREE.BufferAttribute(weave.threads,3));
+  this.weaveGeometry.setIndex(new THREE.BufferAttribute(weave.indices,1));
+  this.weaveMaterial=new THREE.ShaderMaterial({
+   uniforms:{...this.u,threadHalfWidth:{value:weave.halfWidth}},defines:{WOVEN_THREAD:1},
+   vertexShader:this.m.vertexShader,transparent:true,depthWrite:true,side:THREE.DoubleSide,
+   fragmentShader:`varying vec3 tint;varying float visibility,sparkle,front;
+    varying float threadAcross,threadDirection;
+    void main(){
+     float edge=1.-smoothstep(.78,1.,abs(threadAcross));
+     if(visibility*edge<.012)discard;
+     float crown=sqrt(max(0.,1.-threadAcross*threadAcross));
+     float sheen=.18*pow(max(0.,1.-abs(threadAcross+.28)),14.);
+     float fiber=.98+.02*cos(threadAcross*22.);
+     vec3 silk=tint*(.72+.28*crown+sheen)*fiber*mix(.97,1.03,threadDirection);
+     gl_FragColor=vec4(silk*sparkle,visibility*edge);
+     #include <tonemapping_fragment>
+     #include <colorspace_fragment>
+    }`
+  });
+  this.weave=new THREE.Mesh(this.weaveGeometry,this.weaveMaterial);this.weave.frustumCulled=false;
+  this.scene.add(this.weave);this.setMode('weave');
+ }
+ setMode(mode){this.mode=mode==='particles'?'particles':'weave';this.points.visible=this.mode==='particles';this.weave.visible=this.mode==='weave';}
+ setCustomImage(image){
+  const slot=this.customSlot??this.textures.length;this.customSlot=slot;
+  const previous=this.textures[slot],texture=new THREE.Texture(image);texture.colorSpace=THREE.SRGBColorSpace;texture.needsUpdate=true;
+  this.textures[slot]=texture;this.fields[slot]=this.fields[0];this.setTargets(slot,slot);this.resetGrowth();previous?.dispose();return slot;
  }
  setTargets(a,b){if(a!==b)this.resetGrowth();this.g.setAttribute('sourceTarget',this.fields[a].p);this.g.setAttribute('destinationTarget',this.fields[b].p);this.g.setAttribute('sourceUV',this.fields[a].uv);this.g.setAttribute('destinationUV',this.fields[b].uv);this.u.oldMap.value=this.textures[a];this.u.newMap.value=this.textures[b];}
  resetGrowth(){this.growth=0;}
- resize(w,h){this.r.setSize(w,h,false);this.camera.aspect=w/Math.max(1,h);this.camera.position.z=8*Math.max(1,1/this.camera.aspect);this.camera.updateProjectionMatrix();this.u.pointSize.value=Math.max(1.5,Math.min(w,h)*this.r.getPixelRatio()/256*1.15);}
+ resize(w,h){this.r.setSize(w,h,false);this.camera.aspect=w/Math.max(1,h);this.camera.position.z=8*Math.max(1,1/this.camera.aspect);this.camera.updateProjectionMatrix();this.basePointSize=Math.max(1.5,Math.min(w,h)*this.r.getPixelRatio()/256*1.15);this.u.pointSize.value=this.basePointSize*this.zoom.current;}
  draw(time,bands,transition,playing=false){
   const dt=this.lastTime===null?0:Math.min(.1,Math.max(0,time-this.lastTime));this.lastTime=time;
   const activity=THREE.MathUtils.smoothstep(bands[3]*.85+bands[1]*.55,.06,.83);
@@ -116,9 +171,17 @@ export class SoundRenderer{
   this.u.reveal.value=this.reveal;this.u.warmth.value=this.warmth;
   this.u.time.value=time;this.u.bands.value.fromArray(bands);this.u.phase.value=transition.mix;this.u.loose.value=transition.loose;
   const damping=1-Math.exp(-dt*10);
+  if(this.zoom.current!==this.zoom.target){
+   this.zoom.current+=(this.zoom.target-this.zoom.current)*damping;
+   if(Math.abs(this.zoom.target-this.zoom.current)<.0001)this.zoom.current=this.zoom.target;
+   // Lens zoom preserves the existing perspective/depth and avoids near-plane clipping.
+   this.camera.zoom=this.zoom.current;this.camera.updateProjectionMatrix();
+   this.u.pointSize.value=this.basePointSize*this.zoom.current;
+  }
   this.points.rotation.x+=(this.angle.x-this.points.rotation.x)*damping;
   this.points.rotation.y+=(this.angle.y-this.points.rotation.y)*damping;
+  this.weave.rotation.copy(this.points.rotation);
   this.r.render(this.scene,this.camera);
  }
- destroy(){this.events.abort();this.g.dispose();this.m.dispose();this.textures.forEach(t=>t.dispose());this.r.dispose();}
+ destroy(){this.events.abort();this.g.dispose();this.m.dispose();this.weaveGeometry.dispose();this.weaveMaterial.dispose();this.textures.forEach(t=>t.dispose());this.r.dispose();}
 }

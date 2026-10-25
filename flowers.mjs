@@ -4,8 +4,10 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { flowers } from './flowers-data.mjs';
 import { Typewriter } from './weaving-data.mjs';
+import { setupArtworkControls } from './artwork-controls.mjs';
 
 const $=id=>document.getElementById(id),stage=$('model-stage'),status=$('model-status');
+setupArtworkControls({stage,fullscreenButtons:[$('rotation')]});
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const writer=new Typewriter(text=>$('description').textContent=text);
 let renderer,controls,scene,camera,environment,frame,last=0,current=null,index=-1,requested=0,generation=0,aborter,disposed=false,dragging=false,resumeAt=0,auto=!reduced;

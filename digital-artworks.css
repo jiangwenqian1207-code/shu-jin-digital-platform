@@ -1,5 +1,5 @@
 .artworks-page { background: var(--paper); color: var(--ink); }
-.artworks-hero { height: 208px; padding-top: 44px; }
+.artworks-hero { height: auto; padding-top: 44px; }
 .artworks-hero h1 { margin: 0; font-family: SourceHanSerif, serif; font-size: 48px; font-weight: 500; line-height: 67px; }
 .artworks-hero p { max-width: 600px; margin: 12px 0 0; color: #343436; font-size: 16px; line-height: 24px; letter-spacing: 1.92px; }
 .artworks-content { padding-top: 24px; padding-bottom: 112px; }
@@ -47,10 +47,10 @@
   .artworks-page .library-header .language-switcher { display: none; }
 }
 @media (max-width: 767px) {
-  .artworks-hero { height: auto; padding-top: 32px; padding-bottom: 28px; }
+  .artworks-hero { height: auto; padding-top: 32px; padding-bottom: 0; }
   .artworks-hero h1 { font-size: 36px; line-height: 52px; }
   .artworks-hero p { font-size: 14px; letter-spacing: 1px; }
-  .artworks-content { padding-top: 8px; padding-bottom: 48px; }
+  .artworks-content { padding-top: 24px; padding-bottom: 48px; }
   .artworks-filters { gap: 8px; }
   .artworks-filters a { font-size: 13px; padding: 6px 12px; }
   .artworks-gallery { margin-top: 28px; gap: 40px; }

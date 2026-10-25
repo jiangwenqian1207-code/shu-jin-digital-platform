@@ -19,9 +19,22 @@
   .pattern-grid .pattern-info{margin:8px 0 0;display:flex;align-items:flex-start;flex-direction:column;gap:6px}
   .pattern-grid .pattern-info strong{font-size:12px;line-height:18px;white-space:normal;overflow-wrap:anywhere;font-weight:500;min-height:36px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .pattern-grid .pattern-price{font-size:12px;line-height:18px;padding:1px 6px;border-radius:12px}
-  .pattern-grid .pattern-download-wrap{display:block;width:100%;margin:10px 0 0}
+  .pattern-grid .pattern-detail-link{width:100%;min-height:36px;margin:10px 0 0;border-radius:4px;font-size:12px;letter-spacing:0}
+  .pattern-grid .pattern-download-wrap{display:block;width:100%;margin:8px 0 0}
   .pattern-grid .pattern-card .pattern-download{display:block;width:100%;height:36px;margin:0;padding:0;border-radius:4px;font-size:12px;letter-spacing:2px;opacity:1}
   .library-search label{min-width:0;flex:1}.library-search input{min-width:0;width:100%}.library-search-submit{flex-shrink:0}.library-category{white-space:nowrap}
+  .library-search .library-category-wrap{width:112px;height:38px;display:flex;align-items:center}
+  .library-search .library-category-wrap .library-category{display:flex;align-items:center;justify-content:center;width:112px;height:38px;padding:0 10px;line-height:1}
+  .library-filter-row .library-filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;gap:6px}
+  .library-filters .library-filter{min-width:0}
+  .library-filters .filter-trigger{flex:1;min-width:0;justify-content:center;gap:2px;padding:7px 2px;font-size:12px;line-height:20px}
+  .library-filters .filter-trigger span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .library-filters .filter-trigger img{width:8px;height:6px;flex:none}
+  .library-filters .library-filter.has-selection .filter-trigger{padding-right:0}
+  .library-filters .filter-clear{width:18px;height:30px;margin-right:2px;justify-content:center}
+  .library-filters .filter-clear img{width:12px;height:12px}
+  .library-filters .library-filter:nth-last-child(-n+2) .library-filter-menu{left:auto;right:0}
+  .studio-page .product-view-tools>span{display:none}
   .pattern-empty{grid-column:1/-1}
   @keyframes mobile-slide-in{from{transform:translateX(100%)}to{transform:translateX(0)}}
 }

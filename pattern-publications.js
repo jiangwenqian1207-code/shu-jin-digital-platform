@@ -30,7 +30,7 @@
     <section class="publication-summary"><h3>授权摘要</h3><p id="publication-summary"></p></section>
     <label class="publication-confirm"><input name="rights" type="checkbox" required>我确认已如实填写来源，并拥有作品及所用素材的发布与授权权利。示例素材不可冒充原创；该勾选不等于平台完成版权审核。</label>
     <p id="publication-feedback" role="status"></p><footer><button type="button" data-pub-close>取消</button><button class="publication-primary" type="submit">确认上传（本地演示）</button></footer></form>
-    <section id="publication-success" hidden><h3>已保存到本地素材纹样库</h3><p>作品图像、作者信息和授权设置已一并保存。清除浏览器数据会删除这些记录；其他用户目前无法访问。</p><a href="./digital-pattern-library.html#my-local-patterns">查看我的本地作品 →</a></section>`;
+    <section id="publication-success" hidden><h3>已保存到本地素材纹样库</h3><p>作品图像、作者信息和授权设置已一并保存。清除浏览器数据会删除这些记录；其他用户目前无法访问。</p><a href="./digital-pattern-library.html">返回数字纹样库 →</a></section>`;
   const scrollBody=document.createElement('div');
   scrollBody.className='publication-scroll-body';
   scrollBody.append(...Array.from(dialog.children).slice(1));
