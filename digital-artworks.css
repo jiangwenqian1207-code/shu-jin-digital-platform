@@ -51,8 +51,8 @@
   .artworks-hero h1 { font-size: 36px; line-height: 52px; }
   .artworks-hero p { font-size: 14px; letter-spacing: 1px; }
   .artworks-content { padding-top: 24px; padding-bottom: 48px; }
-  .artworks-filters { gap: 8px; }
-  .artworks-filters a { font-size: 13px; padding: 6px 12px; }
+  .artworks-filters { flex-wrap: nowrap; gap: 6px; }
+  .artworks-filters a { flex: 1 1 auto; min-width: 0; padding: 6px 4px; font-size: clamp(12px,3.2vw,13px); text-align: center; white-space: nowrap; }
   .artworks-gallery { margin-top: 28px; gap: 40px; }
   .artwork { width: 100%; }
   .artwork-media { border-radius: 12px; }
